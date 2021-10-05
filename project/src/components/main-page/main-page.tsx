@@ -1,7 +1,7 @@
 import FilmCard from '../film-card/film-card';
 import { MainPageProps } from './type';
 
-function MainPage({filmName, filmGenre, filmRelease}: MainPageProps): JSX.Element {
+export default function MainPage({filmName, filmGenre, filmRelease}: MainPageProps): JSX.Element {
   return (
     <div className="page-content">
       <section className="catalog">
@@ -65,5 +65,3 @@ function MainPage({filmName, filmGenre, filmRelease}: MainPageProps): JSX.Elemen
     </div>
   );
 }
-
-export default MainPage;
