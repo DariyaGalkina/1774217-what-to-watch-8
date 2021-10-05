@@ -1,8 +1,11 @@
 import MainPage from '../main-page/main-page';
+import { AppProps } from './type';
 
-function App(): JSX.Element {
+function App({filmInfo}: AppProps): JSX.Element {
+  const {name, genre, release} = filmInfo;
+
   return (
-    <MainPage />
+    <MainPage filmName={name} filmGenre={genre} filmRelease={release}/>
   );
 }
 

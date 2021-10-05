@@ -1,6 +1,7 @@
 import FilmCard from '../film-card/film-card';
+import { MainPageProps } from './type';
 
-function MainPage(): JSX.Element {
+function MainPage({filmName, filmGenre, filmRelease}: MainPageProps): JSX.Element {
   return (
     <div className="page-content">
       <section className="catalog">
@@ -40,7 +41,7 @@ function MainPage(): JSX.Element {
         </ul>
 
         <div className="catalog__films-list">
-          {Array(20).fill('').map(FilmCard)}
+          {Array(20).fill('').map(() => FilmCard(filmName))}
         </div>
 
         <div className="catalog__more">
