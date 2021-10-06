@@ -1,4 +1,6 @@
-export default function FilmCard(filmName: string): JSX.Element {
+import { FilmCardProps } from './type';
+
+export default function FilmCard({filmName}: FilmCardProps): JSX.Element {
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
