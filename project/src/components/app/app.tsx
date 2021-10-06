@@ -1,5 +1,18 @@
-function App(): JSX.Element {
-  return <p>Hello, world!</p>;
-}
+import MainPage from '../main-page/main-page';
+import { AppProps } from './type';
 
-export default App;
+export default function App({filmInfo}: AppProps): JSX.Element {
+  const {
+    name,
+    genre,
+    release,
+  } = filmInfo;
+
+  return (
+    <MainPage
+      filmName={name}
+      filmGenre={genre}
+      filmRelease={release}
+    />
+  );
+}
