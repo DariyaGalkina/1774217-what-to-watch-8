@@ -1,4 +1,4 @@
-import { FilmCardProps } from './type';
+import type { FilmCardProps } from './type';
 
 export default function FilmCard({filmName}: FilmCardProps): JSX.Element {
   return (
