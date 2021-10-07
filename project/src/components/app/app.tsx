@@ -1,5 +1,13 @@
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import type { AppProps } from './type';
 import MainPage from '../main-page/main-page';
-import { AppProps } from './type';
+import SignIn from '../sign-in/sign-in';
+import MyList from '../my-list/my-list';
+import Film from '../film/film';
+import AddReview from '../add-review/add-review';
+import Player from '../player/player';
+
 
 export default function App({filmInfo}: AppProps): JSX.Element {
   const {
@@ -9,10 +17,31 @@ export default function App({filmInfo}: AppProps): JSX.Element {
   } = filmInfo;
 
   return (
-    <MainPage
-      filmName={name}
-      filmGenre={genre}
-      filmRelease={release}
-    />
+    <BrowserRouter>
+      <Switch>
+        <Route path={AppRoute.Main} exact>
+          <MainPage
+            filmName={name}
+            filmGenre={genre}
+            filmRelease={release}
+          />
+        </Route>
+        <Route path={AppRoute.SignIn} exact>
+          <SignIn />
+        </Route>
+        <Route path={AppRoute.MyList} exact>
+          <MyList />
+        </Route>
+        <Route path={AppRoute.Film} exact>
+          <Film />
+        </Route>
+        <Route path={AppRoute.AddReview} exact>
+          <AddReview />
+        </Route>
+        <Route path={AppRoute.Player} exact>
+          <Player />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
