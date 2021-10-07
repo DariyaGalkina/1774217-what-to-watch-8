@@ -7,7 +7,7 @@ import MyList from '../my-list/my-list';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
-
+import NotFound from '../not-found/not-found';
 
 export default function App({filmInfo}: AppProps): JSX.Element {
   const {
@@ -40,6 +40,9 @@ export default function App({filmInfo}: AppProps): JSX.Element {
         </Route>
         <Route path={AppRoute.Player} exact>
           <Player />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
     </BrowserRouter>
