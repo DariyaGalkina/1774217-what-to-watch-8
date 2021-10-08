@@ -1,5 +1,5 @@
 import FilmCard from '../film-card/film-card';
-import { MainPageProps } from './type';
+import type { MainPageProps } from './type';
 
 const FILM_CARD_COUNT = 20;
 const keys = Array(FILM_CARD_COUNT).fill(0).map((elem, index) => index);
