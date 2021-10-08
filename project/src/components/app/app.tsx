@@ -1,14 +1,14 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import type { AppProps } from './type';
-import MainPage from '../main-page/main-page';
-import SignIn from '../sign-in/sign-in';
-import MyList from '../my-list/my-list';
-import Film from '../film/film';
 import AddReview from '../add-review/add-review';
-import Player from '../player/player';
+import Film from '../film/film';
+import MainPage from '../main-page/main-page';
+import MyList from '../my-list/my-list';
 import NotFound from '../not-found/not-found';
+import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
+import SignIn from '../sign-in/sign-in';
+import type { AppProps } from './type';
 
 export default function App({filmInfo}: AppProps): JSX.Element {
   const {
