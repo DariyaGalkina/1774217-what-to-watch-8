@@ -1,3 +1,4 @@
 export type FilmCardProps = {
-  filmName: string
+  filmName: string,
+  preview: string,
 };

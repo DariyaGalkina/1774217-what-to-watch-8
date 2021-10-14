@@ -10,22 +10,12 @@ import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
 import type { AppProps } from './type';
 
-export default function App({filmInfo}: AppProps): JSX.Element {
-  const {
-    name,
-    genre,
-    release,
-  } = filmInfo;
-
+export default function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage
-            filmName={name}
-            filmGenre={genre}
-            filmRelease={release}
-          />
+          <MainPage films={films} />
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <SignIn />

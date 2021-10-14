@@ -1,5 +1,5 @@
+import type { FilmProps } from '../../types/film';
+
 export type MainPageProps = {
-  filmName: string,
-  filmGenre: string,
-  filmRelease: number,
+  films: FilmProps[],
 }
