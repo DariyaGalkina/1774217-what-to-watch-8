@@ -1,4 +1,4 @@
-import FilmCard from '../film-card/film-card';
+import FilmList from '../film-list/film-list';
 import type { MainPageProps } from './type';
 
 // const FILM_CARD_COUNT = 20;
@@ -112,7 +112,7 @@ export default function MainPage({films}: MainPageProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} filmName={film.name} preview={film.previewImage} />)}
+            <FilmList films={films} />
           </div>
 
           <div className="catalog__more">
