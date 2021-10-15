@@ -1,6 +1,11 @@
+import { useParams } from 'react-router';
+import { FilmProps } from '../../types/film';
 import { FilmOverviewProps } from './type';
 
-export default function Film({film}: FilmOverviewProps): JSX.Element {
+export default function Film({films}: FilmOverviewProps): JSX.Element {
+  const { id }: {id: string} = useParams();
+  const currentFilm = films.find((film) => film.id === Number(id));
+
   const {
     name,
     backgroundImage,
@@ -12,7 +17,7 @@ export default function Film({film}: FilmOverviewProps): JSX.Element {
     description,
     director,
     starring,
-  } = film;
+  } = currentFilm as FilmProps;
 
   return (
     <>

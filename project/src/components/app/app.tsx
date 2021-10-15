@@ -28,7 +28,7 @@ export default function App({films}: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film film={films[0]} />
+          <Film films={films} />
         </Route>
         <Route path={AppRoute.AddReview} exact>
           <AddReview

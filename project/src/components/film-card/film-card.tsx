@@ -1,16 +1,14 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
 export default function FilmCard({id, filmName, preview, onMouseEnter}: FilmCardProps): JSX.Element {
   const handleMouseEnter = () => {
     onMouseEnter(id);
-    // eslint-disable-next-line no-console
-    console.log(id);
   };
 
   const handleMouseLeave = () => {
     onMouseEnter(null);
-    // eslint-disable-next-line no-console
-    console.log('off');
   };
 
   return (
@@ -23,7 +21,7 @@ export default function FilmCard({id, filmName, preview, onMouseEnter}: FilmCard
         <img src={preview} alt={filmName} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{filmName}</a>
+        <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}`)}>{filmName}</Link>
       </h3>
     </article>
   );
