@@ -1,8 +1,4 @@
-type AddReviewProps = {
-  name: string,
-  posterImage: string,
-  backgroundImage: string,
-}
+import { AddReviewProps } from './type';
 
 export default function AddReview({name, posterImage, backgroundImage}: AddReviewProps): JSX.Element {
   return (
