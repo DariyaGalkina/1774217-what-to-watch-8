@@ -34,7 +34,12 @@ export default function App({films}: AppProps): JSX.Element {
           <AddReview />
         </Route>
         <Route path={AppRoute.Player} exact>
-          <Player />
+          <Player
+            name={films[0].name}
+            posterImage={films[0].posterImage}
+            videoLink={films[0].videoLink}
+            runTime={films[0].runTime}
+          />
         </Route>
         <Route>
           <NotFound />
