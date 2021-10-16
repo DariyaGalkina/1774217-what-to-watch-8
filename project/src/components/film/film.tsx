@@ -1,9 +1,12 @@
-import { useParams } from 'react-router';
-import { FilmProps } from '../../types/film';
-import { FilmOverviewProps } from './type';
+import { useHistory, useParams } from 'react-router';
+import { AppRoute } from '../../const';
+import type { FilmOverviewProps } from './type';
+import type { FilmProps } from '../../types/film';
 
 export default function Film({films}: FilmOverviewProps): JSX.Element {
+  const history = useHistory();
   const { id }: {id: string} = useParams();
+
   const currentFilm = films.find((film) => film.id === Number(id));
 
   const {
@@ -59,7 +62,9 @@ export default function Film({films}: FilmOverviewProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button"
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${id}`))}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

@@ -1,8 +1,21 @@
-import { PlayerProps } from './type';
+import { useParams } from 'react-router';
+import type { PlayerProps } from './type';
+import type { FilmProps } from '../../types/film';
 
 const HOUR = 60;
 
-export default function Player({name, posterImage, videoLink, runTime}: PlayerProps): JSX.Element {
+export default function Player({films}: PlayerProps): JSX.Element {
+  const { id }: {id: string} = useParams();
+
+  const currentFilm = films.find((film) => film.id === Number(id));
+
+  const {
+    name,
+    posterImage,
+    videoLink,
+    runTime,
+  } = currentFilm as FilmProps;
+
   const playerRunTime = `${Math.floor(runTime / HOUR)}:${runTime % HOUR}:00`;
 
   return (

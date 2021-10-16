@@ -1,6 +1,5 @@
+import { FilmProps } from '../../types/film';
+
 export type PlayerProps = {
-  name: string,
-  posterImage: string,
-  videoLink: string,
-  runTime: number,
+  films: FilmProps[],
 }

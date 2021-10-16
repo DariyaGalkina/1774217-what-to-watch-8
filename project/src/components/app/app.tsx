@@ -38,12 +38,7 @@ export default function App({films}: AppProps): JSX.Element {
           />
         </Route>
         <Route path={AppRoute.Player} exact>
-          <Player
-            name={films[0].name}
-            posterImage={films[0].posterImage}
-            videoLink={films[0].videoLink}
-            runTime={films[0].runTime}
-          />
+          <Player films={films} />
         </Route>
         <Route>
           <NotFound />
