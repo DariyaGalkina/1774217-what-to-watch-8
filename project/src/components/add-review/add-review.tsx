@@ -1,6 +1,18 @@
-import { AddReviewProps } from './type';
+import { useParams } from 'react-router';
+import type { AddReviewProps } from './type';
+import type { FilmProps } from '../../types/film';
 
-export default function AddReview({name, posterImage, backgroundImage}: AddReviewProps): JSX.Element {
+export default function AddReview({films}: AddReviewProps): JSX.Element {
+  const { id }: {id: string} = useParams();
+
+  const currentFilm = films.find((film) => film.id === Number(id));
+
+  const {
+    name,
+    posterImage,
+    backgroundImage,
+  } = currentFilm as FilmProps;
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">

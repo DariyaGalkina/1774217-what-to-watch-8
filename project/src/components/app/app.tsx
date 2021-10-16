@@ -31,11 +31,7 @@ export default function App({films}: AppProps): JSX.Element {
           <Film films={films} />
         </Route>
         <Route path={AppRoute.AddReview} exact>
-          <AddReview
-            name={films[0].name}
-            posterImage={films[0].posterImage}
-            backgroundImage={films[0].backgroundImage}
-          />
+          <AddReview films={films} />
         </Route>
         <Route path={AppRoute.Player} exact>
           <Player films={films} />

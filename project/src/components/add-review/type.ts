@@ -1,5 +1,5 @@
+import { FilmProps } from '../../types/film';
+
 export type AddReviewProps = {
-  name: string,
-  posterImage: string,
-  backgroundImage: string,
+  films: FilmProps[],
 }
