@@ -47,11 +47,7 @@ export default function AddReviewForm(): JSX.Element {
             id="review-text"
             placeholder="Review text"
             value={userInput}
-            onChange={(evt) => {
-              setUserInput(evt.currentTarget.value);
-              // eslint-disable-next-line no-console
-              console.log(evt.currentTarget.value);
-            }}
+            onChange={(evt) => setUserInput(evt.currentTarget.value)}
           />
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
