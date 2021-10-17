@@ -1,9 +1,6 @@
 import FilmList from '../film-list/film-list';
 import type { MainPageProps } from './type';
 
-// const FILM_CARD_COUNT = 20;
-// const keys = Array(FILM_CARD_COUNT).fill(0).map((elem, index) => index);
-
 export default function MainPage({films}: MainPageProps): JSX.Element {
   const {
     name,
