@@ -10,22 +10,12 @@ import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
 import type { AppProps } from './type';
 
-export default function App({filmInfo}: AppProps): JSX.Element {
-  const {
-    name,
-    genre,
-    release,
-  } = filmInfo;
-
+export default function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage
-            filmName={name}
-            filmGenre={genre}
-            filmRelease={release}
-          />
+          <MainPage films={films} />
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
@@ -33,18 +23,18 @@ export default function App({filmInfo}: AppProps): JSX.Element {
         <PrivateRoute
           exact
           path={AppRoute.MyList}
-          render={() => <MyList />}
-          authorizationStatus={AuthorizationStatus.NoAuth}
+          render={() => <MyList films={films} />}
+          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film />
+          <Film films={films} />
         </Route>
         <Route path={AppRoute.AddReview} exact>
-          <AddReview />
+          <AddReview films={films} />
         </Route>
         <Route path={AppRoute.Player} exact>
-          <Player />
+          <Player films={films} />
         </Route>
         <Route>
           <NotFound />

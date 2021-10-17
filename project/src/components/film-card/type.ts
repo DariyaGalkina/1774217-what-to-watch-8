@@ -1,3 +1,6 @@
 export type FilmCardProps = {
-  filmName: string
+  id: number,
+  filmName: string,
+  preview: string,
+  onMouseEnter: (id: number | null) => void,
 };

@@ -1,5 +1,5 @@
 import type { FilmProps } from '../../types/film';
 
-export type MainPageProps = {
-  films: FilmProps[],
+export type MyListProps = {
+  films: FilmProps[]
 }

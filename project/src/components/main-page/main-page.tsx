@@ -1,15 +1,20 @@
-import FilmCard from '../film-card/film-card';
+import FilmList from '../film-list/film-list';
 import type { MainPageProps } from './type';
 
-const FILM_CARD_COUNT = 20;
-const keys = Array(FILM_CARD_COUNT).fill(0).map((elem, index) => index);
+export default function MainPage({films}: MainPageProps): JSX.Element {
+  const {
+    name,
+    genre,
+    released,
+    posterImage,
+    backgroundImage,
+  } = films[0];
 
-export default function MainPage({filmName, filmGenre, filmRelease}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={filmName} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -38,14 +43,14 @@ export default function MainPage({filmName, filmGenre, filmRelease}: MainPagePro
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmGenre}</span>
-                <span className="film-card__year">{filmRelease}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -104,7 +109,7 @@ export default function MainPage({filmName, filmGenre, filmRelease}: MainPagePro
           </ul>
 
           <div className="catalog__films-list">
-            {keys.map((key) => <FilmCard key={key} filmName={filmName} />)}
+            <FilmList films={films} />
           </div>
 
           <div className="catalog__more">

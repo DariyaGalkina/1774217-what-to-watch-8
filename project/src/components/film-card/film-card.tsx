@@ -1,13 +1,27 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
-export default function FilmCard({filmName}: FilmCardProps): JSX.Element {
+export default function FilmCard({id, filmName, preview, onMouseEnter}: FilmCardProps): JSX.Element {
+  const handleMouseEnter = () => {
+    onMouseEnter(id);
+  };
+
+  const handleMouseLeave = () => {
+    onMouseEnter(null);
+  };
+
   return (
-    <article className="small-film-card catalog__films-card">
+    <article
+      className="small-film-card catalog__films-card"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="small-film-card__image">
-        <img src="img/the-grand-budapest-hotel-poster.jpg" alt={filmName} width="280" height="175" />
+        <img src={preview} alt={filmName} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{filmName}</a>
+        <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}`)}>{filmName}</Link>
       </h3>
     </article>
   );
