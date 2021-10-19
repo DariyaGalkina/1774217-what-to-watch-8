@@ -1,14 +1,27 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FilmCardPlayer from '../film-card-player/film-card-player';
 import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
-export default function FilmCard({id, filmName, preview, onMouseEnter}: FilmCardProps): JSX.Element {
+const VIDEO_DELAY = 1000;
+
+export default function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
+  const [isPlayed, setIsPlayed] = useState(false);
+  let mouseOnCard = false;
+
   const handleMouseEnter = () => {
-    onMouseEnter(id);
+    mouseOnCard = true;
+    setTimeout(() => {
+      if (mouseOnCard) {
+        setIsPlayed(true);
+      }
+    }, VIDEO_DELAY);
   };
 
   const handleMouseLeave = () => {
-    onMouseEnter(null);
+    setIsPlayed(false);
+    mouseOnCard = false;
   };
 
   return (
@@ -18,7 +31,11 @@ export default function FilmCard({id, filmName, preview, onMouseEnter}: FilmCard
       onMouseLeave={handleMouseLeave}
     >
       <div className="small-film-card__image">
-        <img src={preview} alt={filmName} width="280" height="175" />
+        <FilmCardPlayer
+          src={previewVideoLink}
+          poster={preview}
+          isPlayed={isPlayed}
+        />
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}`)}>{filmName}</Link>
