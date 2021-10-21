@@ -1,8 +1,9 @@
 import { useHistory, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import type { FilmOverviewProps } from './type';
 import type { FilmProps } from '../../types/film';
-import { Link } from 'react-router-dom';
+
 
 export default function Film({films}: FilmOverviewProps): JSX.Element {
   const history = useHistory();
@@ -77,7 +78,6 @@ export default function Film({films}: FilmOverviewProps): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                {/* <a href="add-review.html" className="btn film-card__button">Add review</a> */}
                 <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${id}`)}>Add review</Link>
               </div>
             </div>
