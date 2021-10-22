@@ -1,15 +1,19 @@
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import FilmList from '../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';
 import { AppRoute } from '../../const';
 import type { FilmOverviewProps } from './type';
 import type { FilmProps } from '../../types/film';
+
+const MAX_SIMILAR_FILMS = 4;
 
 export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
   const history = useHistory();
   const { id }: {id: string} = useParams();
 
   const currentFilm = films.find((film) => film.id === Number(id));
+  const similarFilms = films.filter((film) => film.genre === currentFilm?.genre && film.id !== currentFilm.id);
 
   const {
     name,
@@ -95,44 +99,10 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
+          <h2 className="catalog__title">{similarFilms.length > 0 ? 'More like this' : ''}</h2>
 
           <div className="catalog__films-list">
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-film-card catalog__films-card">
-              <div className="small-film-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-film-card__title">
-                <a className="small-film-card__link" href="film-page.html">Aviator</a>
-              </h3>
-            </article>
+            <FilmList films={similarFilms.slice(0, MAX_SIMILAR_FILMS)} />
           </div>
         </section>
 
