@@ -1,5 +1,5 @@
-import type { ReviewProp } from '../../types/review';
+import type { ReviewProps } from '../../types/review';
 
 export type FilmTabReviewsProps = {
-  reviews: ReviewProp[];
+  reviews: ReviewProps[];
 }

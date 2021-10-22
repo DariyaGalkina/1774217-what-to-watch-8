@@ -1,6 +1,6 @@
-import { ReviewProp } from '../types/review';
+import { ReviewProps } from '../types/review';
 
-export const reviews: ReviewProp[] = [
+export const reviews: ReviewProps[] = [
   {
     id: 1,
     user: {
@@ -15,7 +15,7 @@ export const reviews: ReviewProp[] = [
     id: 2,
     user: {
       id: 5,
-      name: 'Kate Muir',
+      name: 'Muir Kate',
     },
     rating: 6.9,
     comment: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',

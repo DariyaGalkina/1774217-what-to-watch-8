@@ -1,7 +1,7 @@
-import { FilmProps } from '../../types/film';
-import { ReviewProp } from '../../types/review';
+import type { FilmProps } from '../../types/film';
+import type { ReviewProps } from '../../types/review';
 
 export type FilmOverviewProps = {
   films: FilmProps[],
-  reviews: ReviewProp[],
+  reviews: ReviewProps[],
 }
