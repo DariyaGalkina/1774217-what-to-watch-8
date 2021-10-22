@@ -1,13 +1,29 @@
+/* eslint-disable no-console */
+import { useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import FilmTabOverview from '../film-tab-overview/film-tab-overview';
+import FilmTabDetails from '../film-tab-details/film-tab-details';
+import FilmTabReviews from '../film-tab-reviews/film-tab-reviews';
 import { AppRoute } from '../../const';
 import type { FilmOverviewProps } from './type';
 import type { FilmProps } from '../../types/film';
 
-
-export default function Film({films}: FilmOverviewProps): JSX.Element {
+export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
   const history = useHistory();
   const { id }: {id: string} = useParams();
+  const [activeTab, setActiveTab] = useState('Overview');
+
+  const renderActiveTab = (tab: string) => {
+    switch (tab) {
+      case 'Overview':
+        return <FilmTabOverview film={currentFilm as FilmProps} />;
+      case 'Details':
+        return <FilmTabDetails film={currentFilm as FilmProps} />;
+      case 'Reviews':
+        return <FilmTabReviews reviews={reviews}/>;
+    }
+  };
 
   const currentFilm = films.find((film) => film.id === Number(id));
 
@@ -17,11 +33,11 @@ export default function Film({films}: FilmOverviewProps): JSX.Element {
     genre,
     released,
     posterImage,
-    rating,
-    scoresCount,
-    description,
-    director,
-    starring,
+    // rating,
+    // scoresCount,
+    // description,
+    // director,
+    // starring,
   } = currentFilm as FilmProps;
 
   return (
@@ -93,19 +109,36 @@ export default function Film({films}: FilmOverviewProps): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">Overview</a>
+                  <li className={`film-nav__item ${activeTab==='Overview' ? 'film-nav__item--active' : ''}`}>
+                    <Link
+                      className="film-nav__link"
+                      to={`/films/${id}/#overview`}
+                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+                    >Overview
+                    </Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Details</a>
+                  <li className={`film-nav__item ${activeTab==='Details' ? 'film-nav__item--active' : ''}`}>
+                    <Link
+                      className="film-nav__link"
+                      to={`/films/${id}/#details`}
+                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+                    >Details
+                    </Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Reviews</a>
+                  <li className={`film-nav__item ${activeTab==='Reviews' ? 'film-nav__item--active' : ''}`}>
+                    <Link
+                      className="film-nav__link"
+                      to={`/films/${id}/#reviews`}
+                      onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+                    >Reviews
+                    </Link>
                   </li>
                 </ul>
               </nav>
 
-              <div className="film-rating">
+              {renderActiveTab(activeTab)}
+
+              {/* <div className="film-rating">
                 <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">TODO</span>
@@ -119,7 +152,7 @@ export default function Film({films}: FilmOverviewProps): JSX.Element {
                 <p className="film-card__director"><strong>{`Director: ${director}`}</strong></p>
 
                 <p className="film-card__starring"><strong>{`Starring: ${starring.join(', ')} and other`}</strong></p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -1,6 +1,10 @@
 import type { FilmProps } from '../../types/film';
 
-export default function FilmTabDetails(film: FilmProps) : JSX.Element {
+type FilmTabDetailsProps = {
+  film: FilmProps
+}
+
+export default function FilmTabDetails(film: FilmTabDetailsProps) : JSX.Element {
   return (
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">

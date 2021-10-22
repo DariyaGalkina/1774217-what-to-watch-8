@@ -10,7 +10,7 @@ import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
 import type { AppProps } from './type';
 
-export default function App({films}: AppProps): JSX.Element {
+export default function App({films, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -28,7 +28,10 @@ export default function App({films}: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film films={films} />
+          <Film
+            films={films}
+            reviews={reviews}
+          />
         </Route>
         <Route path={AppRoute.AddReview} exact>
           <AddReview films={films} />

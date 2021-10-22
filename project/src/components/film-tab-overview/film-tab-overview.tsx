@@ -1,6 +1,12 @@
 import type { FilmProps } from '../../types/film';
 
-export default function FilmTabOverview(film: FilmProps) : JSX.Element {
+type FilmTabOverviewProps = {
+  film: FilmProps
+}
+
+export default function FilmTabOverview(film: FilmTabOverviewProps) : JSX.Element {
+  // const {rating, scoresCount, description, director, starring} = film;
+
   return (
     <>
       <div className="film-rating">
