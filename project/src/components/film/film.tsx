@@ -1,4 +1,7 @@
-import { useHistory, useParams } from 'react-router';
+import {
+  useHistory,
+  useParams
+} from 'react-router';
 import { Link } from 'react-router-dom';
 import FilmList from '../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';

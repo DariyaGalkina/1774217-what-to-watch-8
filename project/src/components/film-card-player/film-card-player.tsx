@@ -1,4 +1,7 @@
-import { useEffect, useRef } from 'react';
+import {
+  useEffect,
+  useRef
+} from 'react';
 import type { FilmCardPlayerProps } from './type';
 
 const VIDEO_DELAY = 1000;
