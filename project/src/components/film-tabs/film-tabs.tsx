@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FilmTabOverview from '../film-tab-overview/film-tab-overview';
 import FilmTabDetails from '../film-tab-details/film-tab-details';
@@ -12,7 +11,7 @@ const FilmTab = {
 };
 
 export default function FilmTabs({id, film, reviews}: FilmTabsProps) : JSX.Element {
-  const [activeTab, setActiveTab] = useState(FilmTab.OVERVIEW);
+  const urlHash = document.location.hash.replace('#', '');
 
   const renderActiveTab = (tab: string) => {
     switch (tab) {
@@ -26,7 +25,7 @@ export default function FilmTabs({id, film, reviews}: FilmTabsProps) : JSX.Eleme
   };
 
   const setClassName = (thisTab: string) => (
-    `film-nav__item ${activeTab === thisTab ? 'film-nav__item--active' : ''}`
+    `film-nav__item ${urlHash === thisTab ? 'film-nav__item--active' : ''}`
   );
 
   return (
@@ -36,30 +35,27 @@ export default function FilmTabs({id, film, reviews}: FilmTabsProps) : JSX.Eleme
           <li className={setClassName(FilmTab.OVERVIEW)}>
             <Link
               className="film-nav__link"
-              to={`/films/${id}/#overview`}
-              onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+              to={`/films/${id}/#${FilmTab.OVERVIEW}`}
             >Overview
             </Link>
           </li>
           <li className={setClassName(FilmTab.DETAILS)}>
             <Link
               className="film-nav__link"
-              to={`/films/${id}/#details`}
-              onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+              to={`/films/${id}/#${FilmTab.DETAILS}`}
             >Details
             </Link>
           </li>
           <li className={setClassName(FilmTab.REVIEWS)}>
             <Link
               className="film-nav__link"
-              to={`/films/${id}/#reviews`}
-              onClick={(elem) => setActiveTab(elem.currentTarget.text)}
+              to={`/films/${id}/#${FilmTab.REVIEWS}`}
             >Reviews
             </Link>
           </li>
         </ul>
       </nav>
-      {renderActiveTab(activeTab)}
+      {renderActiveTab(urlHash)}
     </div>
   );
 }
