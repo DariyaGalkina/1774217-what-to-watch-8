@@ -4,31 +4,14 @@ import FilmCardPlayer from '../film-card-player/film-card-player';
 import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
-const VIDEO_DELAY = 1000;
-
 export default function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
   const [isPlayed, setIsPlayed] = useState(false);
-  let mouseOnCard = false;
-
-  const handleMouseEnter = () => {
-    mouseOnCard = true;
-    setTimeout(() => {
-      if (mouseOnCard) {
-        setIsPlayed(true);
-      }
-    }, VIDEO_DELAY);
-  };
-
-  const handleMouseLeave = () => {
-    setIsPlayed(false);
-    mouseOnCard = false;
-  };
 
   return (
     <article
       className="small-film-card catalog__films-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setIsPlayed(true)}
+      onMouseLeave={() => setIsPlayed(false)}
     >
       <div className="small-film-card__image">
         <FilmCardPlayer

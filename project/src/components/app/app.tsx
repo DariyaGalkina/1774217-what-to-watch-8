@@ -1,5 +1,8 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import {
+  BrowserRouter,
+  Switch,
+  Route
+} from 'react-router-dom';
 import AddReview from '../add-review/add-review';
 import Film from '../film/film';
 import MainPage from '../main-page/main-page';
@@ -8,9 +11,13 @@ import NotFound from '../not-found/not-found';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../const';
 import type { AppProps } from './type';
 
-export default function App({films}: AppProps): JSX.Element {
+export default function App({films, reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -28,7 +35,10 @@ export default function App({films}: AppProps): JSX.Element {
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film films={films} />
+          <Film
+            films={films}
+            reviews={reviews}
+          />
         </Route>
         <Route path={AppRoute.AddReview} exact>
           <AddReview films={films} />
