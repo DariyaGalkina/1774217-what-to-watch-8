@@ -1,4 +1,4 @@
-import { FilmProps } from './film';
+import type { FilmProps } from './film';
 
 export enum ActionType {
   ChangeGenre = 'films/changeGenre',
