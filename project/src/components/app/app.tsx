@@ -3,8 +3,8 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import AddReview from '../add-review/add-review';
-import Film from '../film/film';
+import AddReview from '../add-review-page/add-review/add-review';
+import Film from '../film-page/film/film';
 import MainPage from '../main-page/main-page';
 import MyList from '../my-list/my-list';
 import NotFound from '../not-found/not-found';

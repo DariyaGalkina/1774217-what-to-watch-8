@@ -3,11 +3,11 @@ import {
   useParams
 } from 'react-router';
 import { Link } from 'react-router-dom';
-import FilmList from '../film-list/film-list';
+import FilmList from '../../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../../const';
 import type { FilmOverviewProps } from './type';
-import type { FilmProps } from '../../types/film';
+import type { FilmProps } from '../../../types/film';
 
 const MAX_SIMILAR_FILMS = 4;
 
