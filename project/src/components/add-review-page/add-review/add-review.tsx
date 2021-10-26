@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import AddReviewForm from '../add-review-form/add-review-form';
 import type { AddReviewProps } from './type';
-import type { FilmProps } from '../../types/film';
+import type { FilmProps } from '../../../types/film';
 
 export default function AddReview({films}: AddReviewProps): JSX.Element {
   const { id }: {id: string} = useParams();

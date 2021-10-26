@@ -21,7 +21,7 @@ export default function FilmCard({id, filmName, preview, previewVideoLink}: Film
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}`)}>{filmName}</Link>
+        <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>{filmName}</Link>
       </h3>
     </article>
   );

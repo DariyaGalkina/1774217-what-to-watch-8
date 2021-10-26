@@ -3,9 +3,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import AddReview from '../add-review/add-review';
-import Film from '../film/film';
-import MainPage from '../main-page/main-page';
+import AddReview from '../add-review-page/add-review/add-review';
+import Film from '../film-page/film/film';
+import Main from '../main-page/main/main';
 import MyList from '../my-list/my-list';
 import NotFound from '../not-found/not-found';
 import Player from '../player/player';
@@ -22,7 +22,7 @@ export default function App({films, reviews}: AppProps): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <MainPage films={films} />
+          <Main films={films} />
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
