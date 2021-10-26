@@ -76,7 +76,7 @@ export default function Main({films}: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList />
+          <GenreList films={films}/>
 
           <div className="catalog__films-list">
             <FilmList films={films} />
