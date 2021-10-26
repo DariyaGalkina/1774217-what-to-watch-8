@@ -8,16 +8,16 @@ import {
 import type { State } from '../types/state';
 
 const initialState: State = {
-  genre: Genres.All,
+  currentGenre: Genres.All,
   filmList: films,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
     case ActionType.ChangeGenre:
-      return {...state, genre: action.payload};
+      return {...state, currentGenre: action.payload};
     case ActionType.FilterFilms:
-      return {...state, filmList: filterFilmsByGenre(action.payload, state.genre)};
+      return {...state, filmList: filterFilmsByGenre(action.payload, state.currentGenre)};
     default:
       return state;
   }

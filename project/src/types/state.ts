@@ -1,6 +1,6 @@
 import { FilmProps } from './film';
 
 export type State = {
-  genre: string,
+  currentGenre: string,
   filmList: FilmProps[],
 }
