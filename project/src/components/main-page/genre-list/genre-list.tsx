@@ -1,14 +1,13 @@
-/* eslint-disable no-console */
 import {
   connect,
   ConnectedProps
 } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Genres } from '../../../const';
 import {
   changeGenre,
   filterFilms
 } from '../../../store/action';
+import { Genres } from '../../../const';
 import type { Actions } from '../../../types/action';
 import type { FilmProps } from '../../../types/film';
 import type { State } from '../../../types/state';
@@ -32,7 +31,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
 
-function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: ConnectedGenreListProps): JSX.Element {
+export function GenreList({films, currentGenre, onChangeGenre, onFilterFilms}: ConnectedGenreListProps): JSX.Element {
   const genres = [
     Genres.All,
     ...new Set(films.map((film) => film.genre)),
@@ -62,5 +61,4 @@ function GenreList({films, onChangeGenre, onFilterFilms, currentGenre}: Connecte
   );
 }
 
-export {GenreList};
 export default connector(GenreList);

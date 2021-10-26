@@ -9,7 +9,7 @@ import type { State } from '../types/state';
 
 const initialState: State = {
   currentGenre: Genres.All,
-  filmList: films,
+  filteredFilms: films,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
@@ -17,7 +17,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     case ActionType.ChangeGenre:
       return {...state, currentGenre: action.payload};
     case ActionType.FilterFilms:
-      return {...state, filmList: filterFilmsByGenre(action.payload, state.currentGenre)};
+      return {...state, filteredFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
     default:
       return state;
   }

@@ -1,8 +1,22 @@
+import {
+  connect,
+  ConnectedProps
+} from 'react-redux';
 import FilmList from '../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
+import type { State } from '../../../types/state';
 import type { MainPageProps } from './type';
 
-export default function Main({films}: MainPageProps): JSX.Element {
+const mapStateToProps = ({filteredFilms}: State) => ({
+  filteredFilms,
+});
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
+
+export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Element {
   const {
     name,
     genre,
@@ -79,7 +93,7 @@ export default function Main({films}: MainPageProps): JSX.Element {
           <GenreList films={films}/>
 
           <div className="catalog__films-list">
-            <FilmList films={films} />
+            <FilmList films={filteredFilms} />
           </div>
 
           <div className="catalog__more">
@@ -104,3 +118,5 @@ export default function Main({films}: MainPageProps): JSX.Element {
     </>
   );
 }
+
+export default connector(Main);
