@@ -102,11 +102,9 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{similarFilms.length > 0 ? 'More like this' : ''}</h2>
+          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
 
-          <div className="catalog__films-list">
-            <FilmList films={similarFilms.slice(0, MAX_SIMILAR_FILMS)} />
-          </div>
+          <FilmList films={similarFilms.slice(0, MAX_SIMILAR_FILMS)} />
         </section>
 
         <footer className="page-footer">
