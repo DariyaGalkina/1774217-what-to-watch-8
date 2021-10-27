@@ -9,7 +9,7 @@ import type { MainPageProps } from './type';
 import ShowMore from '../show-more/show-more';
 import { useState } from 'react';
 
-const FILM_CARD_AMOUNT = 8;
+const FILM_CARD_AMOUNT = 2;
 const DEFAULT_SHOW_SIZE = 1;
 
 const mapStateToProps = ({filteredFilms}: State) => ({
