@@ -6,6 +6,11 @@ import FilmList from '../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import type { State } from '../../../types/state';
 import type { MainPageProps } from './type';
+import ShowMore from '../show-more/show-more';
+import { useState } from 'react';
+
+const FILM_CARD_AMOUNT = 8;
+const DEFAULT_SHOW_SIZE = 1;
 
 const mapStateToProps = ({filteredFilms}: State) => ({
   filteredFilms,
@@ -24,6 +29,13 @@ export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Elemen
     posterImage,
     backgroundImage,
   } = films[0];
+
+  const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
+  const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
+
+  const handleShowMoreClick = () => {
+    setShowSize(() => showSize + 1);
+  };
 
   return (
     <>
@@ -92,13 +104,12 @@ export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Elemen
 
           <GenreList films={films}/>
 
-          <div className="catalog__films-list">
-            <FilmList films={filteredFilms} />
-          </div>
+          <FilmList films={shownFilms}/>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {
+            filteredFilms.length > shownFilms.length &&
+            <ShowMore onClick={handleShowMoreClick}/>
+          }
         </section>
 
         <footer className="page-footer">

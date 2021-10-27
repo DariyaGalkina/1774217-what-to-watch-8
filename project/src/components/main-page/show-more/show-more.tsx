@@ -1,9 +1,15 @@
 import type { ShowMoreProps } from './type';
 
-export default function ShowMore({films}: ShowMoreProps): JSX.Element {
+export default function ShowMore({onClick}: ShowMoreProps): JSX.Element {
   return (
     <div className="catalog__more">
-      <button className="catalog__button" type="button">Show more</button>
+      <button
+        className="catalog__button"
+        type="button"
+        onClick={onClick}
+      >
+        Show more
+      </button>
     </div>
   );
 }

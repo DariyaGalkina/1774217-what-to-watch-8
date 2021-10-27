@@ -3,7 +3,7 @@ import type { FilmListProps } from './type';
 
 export default function FilmList({films}: FilmListProps): JSX.Element {
   return (
-    <>
+    <div className="catalog__films-list">
       {films.map((film) => (
         <FilmCard
           key={film.id}
@@ -13,6 +13,6 @@ export default function FilmList({films}: FilmListProps): JSX.Element {
           previewVideoLink={film.previewVideoLink}
         />
       ))}
-    </>
+    </div>
   );
 }
