@@ -2,18 +2,18 @@ import {
   connect,
   ConnectedProps
 } from 'react-redux';
+import { useState } from 'react';
 import FilmList from '../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
+import ShowMore from '../show-more/show-more';
 import type { State } from '../../../types/state';
 import type { MainPageProps } from './type';
-import ShowMore from '../show-more/show-more';
-import { useState } from 'react';
 
-const FILM_CARD_AMOUNT = 2;
+const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-const mapStateToProps = ({filteredFilms}: State) => ({
-  filteredFilms,
+const mapStateToProps = ({filmList}: State) => ({
+  filmList,
 });
 
 const connector = connect(mapStateToProps);
@@ -21,7 +21,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
 
-export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Element {
+export function Main({films, filmList}: ConnectedMainPageProps): JSX.Element {
   const {
     name,
     genre,
@@ -31,7 +31,7 @@ export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Elemen
   } = films[0];
 
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
-  const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
+  const shownFilms = filmList.slice(0, showSize * FILM_CARD_AMOUNT);
 
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
@@ -107,7 +107,7 @@ export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Elemen
           <FilmList films={shownFilms}/>
 
           {
-            filteredFilms.length > shownFilms.length &&
+            filmList.length > shownFilms.length &&
             <ShowMore onClick={handleShowMoreClick}/>
           }
         </section>

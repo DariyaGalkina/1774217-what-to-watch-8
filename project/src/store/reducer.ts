@@ -12,7 +12,7 @@ import type { State } from '../types/state';
 const initialState: State = {
   currentGenre: Genres.All,
   filmList: [],
-  isDataLoaded: true,
+  isDataLoaded: false,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
@@ -22,7 +22,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     case ActionType.FilterFilms:
       return {...state, filmList: filterFilmsByGenre(action.payload, state.currentGenre)};
     case ActionType.LoadFilms:
-      return {...state, filmList: adaptFilmsToClient(action.payload)};
+      return {...state, filmList: adaptFilmsToClient(action.payload), isDataLoaded: true};
     default:
       return state;
   }
