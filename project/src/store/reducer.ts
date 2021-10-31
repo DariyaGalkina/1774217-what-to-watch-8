@@ -1,4 +1,3 @@
-import { films } from '../mocks/films';
 import { filterFilmsByGenre } from '../utils';
 import { Genres } from '../const';
 import {
@@ -9,7 +8,7 @@ import type { State } from '../types/state';
 
 const initialState: State = {
   currentGenre: Genres.All,
-  filteredFilms: films,
+  filteredFilms: [],
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {

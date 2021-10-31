@@ -1,8 +1,11 @@
 import axios,
-{ AxiosError,
+{
+  AxiosError,
   AxiosInstance,
+  AxiosRequestConfig,
   AxiosResponse
 } from 'axios';
+import { getToken } from './token';
 import type { UnauthorizedCallback } from '../types/api';
 
 const BACKEND_URL = 'https://8.react.pages.academy/wtw';
@@ -29,6 +32,18 @@ export const createAPI = (onUnauthorized: UnauthorizedCallback): AxiosInstance =
       }
 
       return Promise.reject(error);
+    },
+  );
+
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToken();
+
+      if (token) {
+        config.headers['x-token'] = token;
+      }
+
+      return config;
     },
   );
 
