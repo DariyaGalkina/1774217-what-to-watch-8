@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   connect,
   ConnectedProps
@@ -12,8 +13,8 @@ import type { MainPageProps } from './type';
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-const mapStateToProps = ({filmList}: State) => ({
-  filmList,
+const mapStateToProps = ({filteredFilms}: State) => ({
+  filteredFilms,
 });
 
 const connector = connect(mapStateToProps);
@@ -21,17 +22,17 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
 
-export function Main({films, filmList}: ConnectedMainPageProps): JSX.Element {
+export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Element {
   const {
     name,
     genre,
     released,
     posterImage,
     backgroundImage,
-  } = films[0];
+  } = filteredFilms[0];
 
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
-  const shownFilms = filmList.slice(0, showSize * FILM_CARD_AMOUNT);
+  const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
 
   const handleShowMoreClick = () => {
     setShowSize(() => showSize + 1);
@@ -107,7 +108,7 @@ export function Main({films, filmList}: ConnectedMainPageProps): JSX.Element {
           <FilmList films={shownFilms}/>
 
           {
-            filmList.length > shownFilms.length &&
+            filteredFilms.length > shownFilms.length &&
             <ShowMore onClick={handleShowMoreClick}/>
           }
         </section>

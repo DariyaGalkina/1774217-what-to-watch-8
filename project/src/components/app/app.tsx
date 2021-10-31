@@ -43,7 +43,7 @@ export function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={AppRoute.Main} exact>
-          <Main films={films}/>
+          <Main films={films} />
         </Route>
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
