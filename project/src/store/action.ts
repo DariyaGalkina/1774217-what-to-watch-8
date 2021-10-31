@@ -1,5 +1,8 @@
 import { ActionType } from '../types/action';
-import type { FilmProps } from '../types/film';
+import type {
+  FilmFromServer,
+  FilmProps
+} from '../types/film';
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,
@@ -11,7 +14,7 @@ export const filterFilms = (films: FilmProps[]) => ({
   payload: films,
 } as const);
 
-export const loadFilms = (films: FilmProps[]) => ({
+export const loadFilms = (films: FilmFromServer[]) => ({
   type: ActionType.LoadFilms,
   payload: films,
 } as const);
