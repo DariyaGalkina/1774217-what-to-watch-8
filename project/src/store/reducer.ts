@@ -1,4 +1,7 @@
-import { filterFilmsByGenre } from '../utils';
+import {
+  adaptFilmsToClient,
+  filterFilmsByGenre
+} from '../utils';
 import { Genres } from '../const';
 import {
   Actions,
@@ -19,7 +22,7 @@ export const reducer = (state: State = initialState, action: Actions): State => 
     case ActionType.FilterFilms:
       return {...state, filmList: filterFilmsByGenre(action.payload, state.currentGenre)};
     case ActionType.LoadFilms:
-      return {...state, filmList: action.payload};
+      return {...state, filmList: adaptFilmsToClient(action.payload)};
     default:
       return state;
   }

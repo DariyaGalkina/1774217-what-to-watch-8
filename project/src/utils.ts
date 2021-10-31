@@ -12,7 +12,7 @@ export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps
   return films.filter((film) => film.genre === genre);
 };
 
-export const adaptToClient = (film: FilmFromServer): FilmProps => (
+const adaptToClient = (film: FilmFromServer): FilmProps => (
   {
     id: film['id'],
     name: film['name'],
@@ -32,4 +32,8 @@ export const adaptToClient = (film: FilmFromServer): FilmProps => (
     released: film['released'],
     isFavorite: film['is_favorite'],
   }
+);
+
+export const adaptFilmsToClient = (films: FilmFromServer[]): FilmProps[] => (
+  films.map((film) => adaptToClient(film))
 );
