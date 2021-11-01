@@ -25,6 +25,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
 
 export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainPageProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log(authorizationStatus);
   const {
     name,
     genre,

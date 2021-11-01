@@ -23,10 +23,11 @@ export const fetchFilmsAction = (): ThunkActionResult =>
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
-  async (dispatch, _getState, api) => {
+  async (dispatch, getState, api) => {
     await api.get(APIRoute.Login)
       .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+        const authState = getState().authorizationStatus;
+        dispatch(requireAuthorization(authState));
       });
   };
 
