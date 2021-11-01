@@ -23,17 +23,18 @@ import {
 import type { State } from '../../types/state';
 import { reviews } from '../../mocks/reviews';
 
-const mapStateToProps = ({filmList, isDataLoaded}: State) => ({
+const mapStateToProps = ({filmList, isDataLoaded, authorizationStatus}: State) => ({
   films: filmList,
   isDataLoaded,
+  authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
-  if (!isDataLoaded) {
+export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
+  if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
     return (
       <Loading />
     );
@@ -52,7 +53,6 @@ export function App({films, isDataLoaded}: PropsFromRedux): JSX.Element {
           exact
           path={AppRoute.MyList}
           render={() => <MyList films={films} />}
-          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
