@@ -2,7 +2,10 @@ import {
   adaptFilmsToClient,
   filterFilmsByGenre
 } from '../utils';
-import { Genres } from '../const';
+import {
+  AuthorizationStatus,
+  Genres
+} from '../const';
 import {
   Actions,
   ActionType
@@ -14,6 +17,7 @@ const initialState: State = {
   filmList: [],
   filteredFilms: [],
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 export const reducer = (state: State = initialState, action: Actions): State => {
