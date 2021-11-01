@@ -53,7 +53,6 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
           exact
           path={AppRoute.MyList}
           render={() => <MyList films={films} />}
-          authorizationStatus={AuthorizationStatus.Auth}
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
