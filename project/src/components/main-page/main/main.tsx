@@ -1,15 +1,16 @@
+/* eslint-disable no-console */
 import {
   connect,
   ConnectedProps
 } from 'react-redux';
+import { useState } from 'react';
 import FilmList from '../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
+import ShowMore from '../show-more/show-more';
 import type { State } from '../../../types/state';
 import type { MainPageProps } from './type';
-import ShowMore from '../show-more/show-more';
-import { useState } from 'react';
 
-const FILM_CARD_AMOUNT = 2;
+const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
 const mapStateToProps = ({filteredFilms}: State) => ({
@@ -28,7 +29,7 @@ export function Main({films, filteredFilms}: ConnectedMainPageProps): JSX.Elemen
     released,
     posterImage,
     backgroundImage,
-  } = films[0];
+  } = filteredFilms[0];
 
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
   const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
