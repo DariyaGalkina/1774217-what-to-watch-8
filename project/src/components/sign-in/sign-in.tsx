@@ -6,7 +6,7 @@ import {
   connect,
   ConnectedProps
 } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import type { ThunkAppDispatch } from '../../types/action';
@@ -36,6 +36,7 @@ export function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
 
     if (userInput.email !== '' && userInput.password !== '') {
       onSubmit(userInput);
+      history.push(AppRoute.Main);
     }
   };
 
@@ -90,12 +91,7 @@ export function SignIn({onSubmit}: PropsFromRedux): JSX.Element {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button
-              className="sign-in__btn"
-              type="submit"
-              onClick={() => history.push(AppRoute.Main)}
-            >Sign in
-            </button>
+            <button className="sign-in__btn" type="submit">Sign in</button>
           </div>
         </form>
       </div>
