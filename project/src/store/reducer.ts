@@ -22,13 +22,16 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {...state, currentGenre: action.payload};
     case ActionType.FilterFilms:
       return {...state, filteredFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
-    case ActionType.LoadFilms:
+    case ActionType.LoadFilms: {
+      const adaptedFilms = adaptFilmsToClient(action.payload);
+
       return {
         ...state,
-        filmList: adaptFilmsToClient(action.payload),
-        filteredFilms: adaptFilmsToClient(action.payload),
+        filmList: adaptedFilms,
+        filteredFilms: adaptedFilms,
         isDataLoaded: true,
       };
+    }
     default:
       return state;
   }
