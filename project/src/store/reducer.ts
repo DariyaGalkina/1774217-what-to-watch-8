@@ -36,6 +36,10 @@ export const reducer = (state: State = initialState, action: Actions): State => 
         isDataLoaded: true,
       };
     }
+    case ActionType.RequireAuthorization:
+      return {...state, authorizationStatus: action.payload};
+    case ActionType.RequireLogout:
+      return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
     default:
       return state;
   }
