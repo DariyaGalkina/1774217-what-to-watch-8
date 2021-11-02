@@ -31,7 +31,14 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
 
-export function GenreList({films, currentGenre, onChangeGenre, onFilterFilms}: ConnectedGenreListProps): JSX.Element {
+export function GenreList({
+  films,
+  currentGenre,
+  resetShowSize,
+  onChangeGenre,
+  onFilterFilms,
+}: ConnectedGenreListProps): JSX.Element {
+
   const genres = [
     Genres.All,
     ...new Set(films.map((film) => film.genre)),
@@ -51,6 +58,7 @@ export function GenreList({films, currentGenre, onChangeGenre, onFilterFilms}: C
               evt.preventDefault();
               onChangeGenre(genre);
               onFilterFilms(films);
+              resetShowSize();
             }}
           >
             {genre}

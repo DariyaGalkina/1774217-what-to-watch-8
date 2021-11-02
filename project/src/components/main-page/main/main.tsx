@@ -118,7 +118,10 @@ export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainP
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={films}/>
+          <GenreList
+            films={films}
+            resetShowSize={() => setShowSize(DEFAULT_SHOW_SIZE)}
+          />
 
           <FilmList films={shownFilms}/>
 
