@@ -1,6 +1,7 @@
 import {
   loadFilm,
   loadFilms,
+  loadSimilarFilms,
   requireAuthorization,
   requireLogout
 } from './action';
@@ -27,6 +28,12 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
     dispatch(loadFilm(data));
+  };
+
+export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<FilmFromServer[]>(APIRoute.Similar.replace(':id', `${filmId}`));
+    dispatch(loadSimilarFilms(data));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>

@@ -7,25 +7,28 @@ import {
   useParams
 } from 'react-router';
 import { Link } from 'react-router-dom';
-import FilmList from '../../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';
 import Loading from '../../loading/loading';
-import { fetchFilmAction } from '../../../store/api-actions';
+import SimilarFilms from '../../similar-films/similar-films';
+import { fetchFilmAction, fetchSimilarFilmsAction } from '../../../store/api-actions';
 import { AppRoute } from '../../../const';
 import type { FilmOverviewProps } from './type';
 import type { FilmProps } from '../../../types/film';
 import type { State } from '../../../types/state';
 import type { ThunkAppDispatch } from '../../../types/action';
 
-const MAX_SIMILAR_FILMS = 4;
-
-const mapStateToProps = ({currentFilm}: State) => ({
+const mapStateToProps = ({currentFilm, similarFilms, isSimilarFilmsLoaded}: State) => ({
   currentFilm,
+  similarFilms,
+  isSimilarFilmsLoaded,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   getCurrentFilm(id: number) {
     dispatch(fetchFilmAction(id));
+  },
+  getSimilarFilms(id: number) {
+    dispatch(fetchSimilarFilmsAction(id));
   },
 });
 
@@ -34,19 +37,22 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedFilmProps = PropsFromRedux & FilmOverviewProps;
 
-export function Film({films, reviews, currentFilm, getCurrentFilm}: ConnectedFilmProps): JSX.Element {
+export function Film({films, reviews, currentFilm, similarFilms, isSimilarFilmsLoaded, getCurrentFilm, getSimilarFilms}: ConnectedFilmProps): JSX.Element {
   const history = useHistory();
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
   if (currentFilm?.id !== filmId) {
     getCurrentFilm(filmId);
+
     return (
       <Loading />
     );
   }
 
-  const similarFilms = films.filter((film) => film.genre === currentFilm?.genre && film.id !== currentFilm.id);
+  if (!isSimilarFilmsLoaded) {
+    getSimilarFilms(filmId);
+  }
 
   const {
     name,
@@ -132,9 +138,9 @@ export function Film({films, reviews, currentFilm, getCurrentFilm}: ConnectedFil
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
-
-          <FilmList films={similarFilms.slice(0, MAX_SIMILAR_FILMS)} />
+          {
+            isSimilarFilmsLoaded ? (<SimilarFilms />) : (<Loading />)
+          }
         </section>
 
         <footer className="page-footer">

@@ -25,6 +25,11 @@ export const loadFilm = (film: FilmFromServer) => ({
   payload: film,
 } as const);
 
+export const loadSimilarFilms = (films: FilmFromServer[]) => ({
+  type: ActionType.LoadSimilarFilms,
+  payload: films,
+} as const);
+
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,

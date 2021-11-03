@@ -18,7 +18,9 @@ const initialState: State = {
   currentFilm: null,
   filmList: [],
   filteredFilms: [],
+  similarFilms: [],
   isDataLoaded: false,
+  isSimilarFilmsLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
@@ -39,7 +41,18 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       };
     }
     case ActionType.LoadFilm:
-      return {...state, currentFilm: adaptToClient(action.payload)};
+      return {
+        ...state,
+        currentFilm: adaptToClient(action.payload),
+        similarFilms: [],
+        isSimilarFilmsLoaded: false,
+      };
+    case ActionType.LoadSimilarFilms:
+      return {
+        ...state,
+        similarFilms: adaptFilmsToClient(action.payload),
+        isSimilarFilmsLoaded: true,
+      };
     case ActionType.RequireAuthorization:
       return {...state, authorizationStatus: action.payload};
     case ActionType.RequireLogout:

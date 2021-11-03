@@ -6,6 +6,8 @@ export type State = {
   currentFilm: FilmProps | null,
   filmList: FilmProps[],
   filteredFilms: FilmProps[],
+  similarFilms: FilmProps[],
   isDataLoaded: boolean,
+  isSimilarFilmsLoaded: boolean,
   authorizationStatus: AuthorizationStatus,
 }

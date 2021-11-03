@@ -8,6 +8,7 @@ import {
   filterFilms,
   loadFilms,
   loadFilm,
+  loadSimilarFilms,
   requireAuthorization,
   requireLogout
 } from '../store/action';
@@ -18,6 +19,7 @@ export enum ActionType {
   FilterFilms = 'films/filterFilms',
   LoadFilms = 'data/loadFilms',
   LoadFilm = 'data/loadFilm',
+  LoadSimilarFilms = 'data/loadSimilarFilms',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
 }
@@ -27,6 +29,7 @@ export type Actions =
 | ReturnType<typeof filterFilms>
 | ReturnType<typeof loadFilms>
 | ReturnType<typeof loadFilm>
+| ReturnType<typeof loadSimilarFilms>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
 
