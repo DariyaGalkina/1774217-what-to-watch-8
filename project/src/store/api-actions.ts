@@ -1,4 +1,5 @@
 import {
+  loadFilm,
   loadFilms,
   requireAuthorization,
   requireLogout
@@ -20,6 +21,12 @@ export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {data} = await api.get<FilmFromServer[]>(APIRoute.Films);
     dispatch(loadFilms(data));
+  };
+
+export const fetchFilmAction = (filmId: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
+    dispatch(loadFilm(data));
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
