@@ -21,7 +21,6 @@ import {
   AuthorizationStatus
 } from '../../const';
 import type { State } from '../../types/state';
-import { reviews } from '../../mocks/reviews';
 
 const mapStateToProps = ({filmList, isDataLoaded, authorizationStatus}: State) => ({
   films: filmList,
@@ -56,10 +55,7 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
         >
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film
-            films={films}
-            reviews={reviews}
-          />
+          <Film />
         </Route>
         <Route path={AppRoute.AddReview} exact>
           <AddReview films={films} />

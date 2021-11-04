@@ -10,17 +10,21 @@ import { Link } from 'react-router-dom';
 import FilmTabs from '../film-tabs/film-tabs';
 import Loading from '../../loading/loading';
 import SimilarFilms from '../../similar-films/similar-films';
-import { fetchFilmAction, fetchSimilarFilmsAction } from '../../../store/api-actions';
+import {
+  fetchFilmAction,
+  fetchReviewsAction,
+  fetchSimilarFilmsAction
+} from '../../../store/api-actions';
 import { AppRoute } from '../../../const';
-import type { FilmOverviewProps } from './type';
 import type { FilmProps } from '../../../types/film';
 import type { State } from '../../../types/state';
 import type { ThunkAppDispatch } from '../../../types/action';
 
-const mapStateToProps = ({currentFilm, similarFilms, isSimilarFilmsLoaded}: State) => ({
+const mapStateToProps = ({currentFilm, reviews, isSimilarFilmsLoaded, isReviewsLoaded}: State) => ({
   currentFilm,
-  similarFilms,
+  reviews,
   isSimilarFilmsLoaded,
+  isReviewsLoaded,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -30,14 +34,24 @@ const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   getSimilarFilms(id: number) {
     dispatch(fetchSimilarFilmsAction(id));
   },
+  getReviews(id: number) {
+    dispatch(fetchReviewsAction(id));
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedFilmProps = PropsFromRedux & FilmOverviewProps;
 
-export function Film({films, reviews, currentFilm, similarFilms, isSimilarFilmsLoaded, getCurrentFilm, getSimilarFilms}: ConnectedFilmProps): JSX.Element {
+export function Film({
+  currentFilm,
+  reviews,
+  isSimilarFilmsLoaded,
+  isReviewsLoaded,
+  getCurrentFilm,
+  getSimilarFilms,
+  getReviews,
+}: PropsFromRedux): JSX.Element {
   const history = useHistory();
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
@@ -50,8 +64,9 @@ export function Film({films, reviews, currentFilm, similarFilms, isSimilarFilmsL
     );
   }
 
-  if (!isSimilarFilmsLoaded) {
+  if (!isSimilarFilmsLoaded && !isReviewsLoaded) {
     getSimilarFilms(filmId);
+    getReviews(filmId);
   }
 
   const {

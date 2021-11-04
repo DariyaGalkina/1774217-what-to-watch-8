@@ -4,6 +4,7 @@ import type {
   FilmFromServer,
   FilmProps
 } from '../types/film';
+import type { ReviewProps } from '../types/review';
 
 export const changeGenre = (genre: string) => ({
   type: ActionType.ChangeGenre,
@@ -28,6 +29,11 @@ export const loadFilm = (film: FilmFromServer) => ({
 export const loadSimilarFilms = (films: FilmFromServer[]) => ({
   type: ActionType.LoadSimilarFilms,
   payload: films,
+} as const);
+
+export const loadReviews = (reviews: ReviewProps[]) => ({
+  type: ActionType.LoadReviews,
+  payload: reviews,
 } as const);
 
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
