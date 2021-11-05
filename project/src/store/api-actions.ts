@@ -3,6 +3,7 @@ import {
   loadFilms,
   loadReviews,
   loadSimilarFilms,
+  redirectToRoute,
   requireAuthorization,
   requireLogout
 } from './action';
@@ -13,6 +14,7 @@ import {
 } from '../services/token';
 import {
   APIRoute,
+  AppRoute,
   AuthorizationStatus
 } from '../const';
 import type { AuthData } from '../types/auth-data';
@@ -28,8 +30,12 @@ export const fetchFilmsAction = (): ThunkActionResult =>
 
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
-    dispatch(loadFilm(data));
+    try {
+      const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
+      dispatch(loadFilm(data));
+    } catch {
+      dispatch(redirectToRoute('/404'));
+    }
   };
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
@@ -48,9 +54,10 @@ export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, getState, api) => {
     await api.get(APIRoute.Login)
       .then(() => {
-        const authState = getState().authorizationStatus;
-        dispatch(requireAuthorization(authState));
-      });
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      })
+      // eslint-disable-next-line no-console
+      .catch(() => console.log('TODO'));
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
@@ -58,6 +65,7 @@ export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
     const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
 export const logoutAction = (): ThunkActionResult =>

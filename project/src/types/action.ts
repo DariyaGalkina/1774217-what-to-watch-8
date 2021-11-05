@@ -11,7 +11,8 @@ import {
   loadSimilarFilms,
   loadReviews,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  redirectToRoute
 } from '../store/action';
 import { State } from './state';
 
@@ -24,6 +25,7 @@ export enum ActionType {
   LoadReviews = 'data/loadReviews',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
+  RedirectToRoute = 'app/redirect',
 }
 
 export type Actions =
@@ -35,6 +37,7 @@ export type Actions =
 | ReturnType<typeof loadReviews>
 | ReturnType<typeof requireAuthorization>
 | ReturnType<typeof requireLogout>
+| ReturnType<typeof redirectToRoute>
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

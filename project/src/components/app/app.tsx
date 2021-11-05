@@ -1,5 +1,5 @@
 import {
-  BrowserRouter,
+  Router as BrowserRouter,
   Switch,
   Route
 } from 'react-router-dom';
@@ -16,6 +16,7 @@ import NotFound from '../not-found/not-found';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
+import { browserHistory } from '../../browser-history';
 import {
   AppRoute,
   AuthorizationStatus
@@ -40,7 +41,7 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <Main films={films} />

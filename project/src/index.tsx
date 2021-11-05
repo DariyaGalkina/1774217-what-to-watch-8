@@ -12,6 +12,7 @@ import {
   checkAuthAction,
   fetchFilmsAction
 } from './store/api-actions';
+import { redirect } from './store/middleware/redirect';
 import { reducer } from './store/reducer';
 import { requireAuthorization } from './store/action';
 import { createAPI } from './services/api';
@@ -24,6 +25,7 @@ const api = createAPI(
 
 const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(thunk.withExtraArgument(api)),
+  applyMiddleware(redirect),
 ));
 
 (store.dispatch as ThunkAppDispatch)(checkAuthAction());
