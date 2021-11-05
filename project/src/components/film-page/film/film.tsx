@@ -15,12 +15,19 @@ import {
   fetchReviewsAction,
   fetchSimilarFilmsAction
 } from '../../../store/api-actions';
-import { AppRoute } from '../../../const';
+import { AppRoute, AuthorizationStatus } from '../../../const';
 import type { FilmProps } from '../../../types/film';
 import type { State } from '../../../types/state';
 import type { ThunkAppDispatch } from '../../../types/action';
 
-const mapStateToProps = ({currentFilm, reviews, isSimilarFilmsLoaded, isReviewsLoaded}: State) => ({
+const mapStateToProps = ({
+  authorizationStatus,
+  currentFilm,
+  reviews,
+  isSimilarFilmsLoaded,
+  isReviewsLoaded,
+}: State) => ({
+  authorizationStatus,
   currentFilm,
   reviews,
   isSimilarFilmsLoaded,
@@ -44,6 +51,7 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export function Film({
+  authorizationStatus,
   currentFilm,
   reviews,
   isSimilarFilmsLoaded,
@@ -52,6 +60,7 @@ export function Film({
   getSimilarFilms,
   getReviews,
 }: PropsFromRedux): JSX.Element {
+
   const history = useHistory();
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
@@ -131,7 +140,10 @@ export function Film({
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth &&
+                  <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>
+                }
               </div>
             </div>
           </div>
