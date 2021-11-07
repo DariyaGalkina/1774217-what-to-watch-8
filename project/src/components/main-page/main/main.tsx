@@ -25,8 +25,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
 
 export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainPageProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log(authorizationStatus);
   const {
     name,
     genre,
@@ -118,7 +116,10 @@ export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainP
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenreList films={films}/>
+          <GenreList
+            films={films}
+            resetShowSize={() => setShowSize(DEFAULT_SHOW_SIZE)}
+          />
 
           <FilmList films={shownFilms}/>
 

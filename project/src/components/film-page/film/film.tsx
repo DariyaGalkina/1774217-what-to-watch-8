@@ -1,22 +1,82 @@
 import {
+  connect,
+  ConnectedProps
+} from 'react-redux';
+import {
   useHistory,
   useParams
 } from 'react-router';
 import { Link } from 'react-router-dom';
-import FilmList from '../../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';
-import { AppRoute } from '../../../const';
-import type { FilmOverviewProps } from './type';
+import Loading from '../../loading/loading';
+import SimilarFilms from '../../similar-films/similar-films';
+import {
+  fetchFilmAction,
+  fetchReviewsAction,
+  fetchSimilarFilmsAction
+} from '../../../store/api-actions';
+import { AppRoute, AuthorizationStatus } from '../../../const';
 import type { FilmProps } from '../../../types/film';
+import type { State } from '../../../types/state';
+import type { ThunkAppDispatch } from '../../../types/action';
 
-const MAX_SIMILAR_FILMS = 4;
+const mapStateToProps = ({
+  authorizationStatus,
+  currentFilm,
+  reviews,
+  isSimilarFilmsLoaded,
+  isReviewsLoaded,
+}: State) => ({
+  authorizationStatus,
+  currentFilm,
+  reviews,
+  isSimilarFilmsLoaded,
+  isReviewsLoaded,
+});
 
-export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getCurrentFilm(id: number) {
+    dispatch(fetchFilmAction(id));
+  },
+  getSimilarFilms(id: number) {
+    dispatch(fetchSimilarFilmsAction(id));
+  },
+  getReviews(id: number) {
+    dispatch(fetchReviewsAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export function Film({
+  authorizationStatus,
+  currentFilm,
+  reviews,
+  isSimilarFilmsLoaded,
+  isReviewsLoaded,
+  getCurrentFilm,
+  getSimilarFilms,
+  getReviews,
+}: PropsFromRedux): JSX.Element {
+
   const history = useHistory();
   const { id }: {id: string} = useParams();
+  const filmId = Number(id);
 
-  const currentFilm = films.find((film) => film.id === Number(id));
-  const similarFilms = films.filter((film) => film.genre === currentFilm?.genre && film.id !== currentFilm.id);
+  if (currentFilm?.id !== filmId) {
+    getCurrentFilm(filmId);
+
+    return (
+      <Loading />
+    );
+  }
+
+  if (!isSimilarFilmsLoaded && !isReviewsLoaded) {
+    getSimilarFilms(filmId);
+    getReviews(filmId);
+  }
 
   const {
     name,
@@ -67,7 +127,7 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button"
-                  onClick={() => history.push(AppRoute.Player.replace(':id', `${id}`))}
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${filmId}`))}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -80,7 +140,10 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${id}`)}>Add review</Link>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth &&
+                  <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>
+                }
               </div>
             </div>
           </div>
@@ -93,7 +156,7 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
             </div>
 
             <FilmTabs
-              id={id}
+              id={filmId}
               film={currentFilm as FilmProps}
               reviews={reviews}
             />
@@ -102,9 +165,9 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{similarFilms.length > 0 && 'More like this'}</h2>
-
-          <FilmList films={similarFilms.slice(0, MAX_SIMILAR_FILMS)} />
+          {
+            isSimilarFilmsLoaded ? (<SimilarFilms />) : (<Loading />)
+          }
         </section>
 
         <footer className="page-footer">
@@ -124,3 +187,5 @@ export default function Film({films, reviews}: FilmOverviewProps): JSX.Element {
     </>
   );
 }
+
+export default connector(Film);

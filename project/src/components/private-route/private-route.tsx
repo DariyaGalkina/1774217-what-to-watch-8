@@ -4,14 +4,14 @@ import {
 } from 'react-redux';
 import {
   Route,
-  Redirect
+  Redirect,
+  RouteProps
 } from 'react-router-dom';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../const';
 import type { State } from '../../types/state';
-import type { PrivateRouteProps } from './type';
 
 const mapStateToProps = ({authorizationStatus}: State) => ({
   authorizationStatus,
@@ -20,21 +20,19 @@ const mapStateToProps = ({authorizationStatus}: State) => ({
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedPrivateRouteProps = PropsFromRedux & PrivateRouteProps;
+type ConnectedPrivateRouteProps = PropsFromRedux & RouteProps;
 
 export function PrivateRoute(props: ConnectedPrivateRouteProps): JSX.Element {
-  const {exact, path, render, authorizationStatus} = props;
+  const {exact, path, children, authorizationStatus} = props;
 
   return (
-    <Route
-      exact={exact}
-      path={path}
-      render={() => (
+    <Route exact={exact} path={path}>
+      {
         authorizationStatus === AuthorizationStatus.Auth
-          ? render()
+          ? children
           : <Redirect to={AppRoute.SignIn} />
-      )}
-    />
+      }
+    </Route>
   );
 }
 

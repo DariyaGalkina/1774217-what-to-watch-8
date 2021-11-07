@@ -1,5 +1,5 @@
 import {
-  BrowserRouter,
+  Router as BrowserRouter,
   Switch,
   Route
 } from 'react-router-dom';
@@ -16,12 +16,12 @@ import NotFound from '../not-found/not-found';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../sign-in/sign-in';
+import { browserHistory } from '../../browser-history';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../const';
 import type { State } from '../../types/state';
-import { reviews } from '../../mocks/reviews';
 
 const mapStateToProps = ({filmList, isDataLoaded, authorizationStatus}: State) => ({
   films: filmList,
@@ -41,7 +41,7 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route path={AppRoute.Main} exact>
           <Main films={films} />
@@ -49,21 +49,15 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
         </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.MyList}
-          render={() => <MyList films={films} />}
-        >
+        <PrivateRoute exact path={AppRoute.MyList}>
+          <MyList films={films} />
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
-          <Film
-            films={films}
-            reviews={reviews}
-          />
+          <Film />
         </Route>
-        <Route path={AppRoute.AddReview} exact>
-          <AddReview films={films} />
-        </Route>
+        <PrivateRoute exact path={AppRoute.AddReview}>
+          <AddReview />
+        </PrivateRoute>
         <Route path={AppRoute.Player} exact>
           <Player films={films} />
         </Route>

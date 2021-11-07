@@ -1,12 +1,42 @@
-import { useParams } from 'react-router';
+import {
+  connect,
+  ConnectedProps
+} from 'react-redux';
+import {
+  Link,
+  useParams
+} from 'react-router-dom';
 import AddReviewForm from '../add-review-form/add-review-form';
-import type { AddReviewProps } from './type';
+import Loading from '../../loading/loading';
+import { fetchFilmAction } from '../../../store/api-actions';
+import { AppRoute } from '../../../const';
 import type { FilmProps } from '../../../types/film';
+import type { State } from '../../../types/state';
+import type { ThunkAppDispatch } from '../../../types/action';
 
-export default function AddReview({films}: AddReviewProps): JSX.Element {
-  const { id }: {id: string} = useParams();
+const mapStateToProps = ({currentFilm}: State) => ({
+  currentFilm,
+});
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getCurrentFilm(id: number) {
+    dispatch(fetchFilmAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.Element {
+  const {id}: {id: string} = useParams();
+  const filmId = Number(id);
+
+  if (currentFilm?.id !== filmId) {
+    getCurrentFilm(filmId);
+
+    return <Loading />;
+  }
 
   const {
     name,
@@ -25,20 +55,20 @@ export default function AddReview({films}: AddReviewProps): JSX.Element {
 
         <header className="page-header">
           <div className="logo">
-            <a href="main.html" className="logo__link">
+            <Link to={AppRoute.Main} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
+                <Link to={AppRoute.AddReview.replace(':id', id.toString())} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -64,3 +94,5 @@ export default function AddReview({films}: AddReviewProps): JSX.Element {
     </section>
   );
 }
+
+export default connector(AddReview);
