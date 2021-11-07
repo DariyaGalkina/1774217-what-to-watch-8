@@ -2,23 +2,43 @@ import {
   connect,
   ConnectedProps
 } from 'react-redux';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  useParams
+} from 'react-router-dom';
 import AddReviewForm from '../add-review-form/add-review-form';
+import Loading from '../../loading/loading';
+import { fetchFilmAction } from '../../../store/api-actions';
 import { AppRoute } from '../../../const';
 import type { FilmProps } from '../../../types/film';
 import type { State } from '../../../types/state';
+import type { ThunkAppDispatch } from '../../../types/action';
 
 const mapStateToProps = ({currentFilm}: State) => ({
   currentFilm,
 });
 
-const connector = connect(mapStateToProps);
+const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
+  getCurrentFilm(id: number) {
+    dispatch(fetchFilmAction(id));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export function AddReview({currentFilm}: PropsFromRedux): JSX.Element {
+export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.Element {
+  const {id}: {id: string} = useParams();
+  const filmId = Number(id);
+
+  if (currentFilm?.id !== filmId) {
+    getCurrentFilm(filmId);
+
+    return <Loading />;
+  }
+
   const {
-    id,
     name,
     posterImage,
     backgroundImage,
@@ -45,7 +65,7 @@ export function AddReview({currentFilm}: PropsFromRedux): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Film.replace(':id', id.toString())} className="breadcrumbs__link">{name}</Link>
+                <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link to={AppRoute.AddReview.replace(':id', id.toString())} className="breadcrumbs__link">Add review</Link>

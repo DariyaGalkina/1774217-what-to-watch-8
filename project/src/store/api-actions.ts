@@ -19,8 +19,9 @@ import {
 } from '../const';
 import type { AuthData } from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
-import type { ReviewProps } from '../types/review';
+import type { ReviewPost, ReviewProps } from '../types/review';
 import type { ThunkActionResult } from '../types/action';
+import { toast } from 'react-toastify';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -52,12 +53,12 @@ export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, getState, api) => {
-    await api.get(APIRoute.Login)
-      .then(() => {
-        dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      })
-      // eslint-disable-next-line no-console
-      .catch(() => console.log('TODO'));
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch {
+      toast.error('Auth failed');
+    }
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
@@ -73,4 +74,15 @@ export const logoutAction = (): ThunkActionResult =>
     api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireLogout());
+  };
+
+export const sendReviewAction = (filmId: number, review: ReviewPost ): ThunkActionResult =>
+  async (dispatch, _getState, api) : Promise<void> => {
+    try {
+      const {data} = await api.post<ReviewProps[]>(APIRoute.Reviews.replace(':id', `${filmId}`), review);
+      dispatch(loadReviews(data));
+      dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#Overview`)));
+    } catch {
+      toast.error('Sending failed');
+    }
   };
