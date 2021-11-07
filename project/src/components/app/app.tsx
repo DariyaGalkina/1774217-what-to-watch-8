@@ -49,18 +49,15 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
         <Route path={AppRoute.SignIn} exact>
           <SignIn />
         </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.MyList}
-          render={() => <MyList films={films} />}
-        >
+        <PrivateRoute exact path={AppRoute.MyList}>
+          <MyList films={films} />
         </PrivateRoute>
         <Route path={AppRoute.Film} exact>
           <Film />
         </Route>
-        <Route path={AppRoute.AddReview} exact>
-          <AddReview films={films} />
-        </Route>
+        <PrivateRoute exact path={AppRoute.AddReview}>
+          <AddReview />
+        </PrivateRoute>
         <Route path={AppRoute.Player} exact>
           <Player films={films} />
         </Route>
