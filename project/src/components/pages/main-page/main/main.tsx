@@ -6,17 +6,15 @@ import { useState } from 'react';
 import FilmList from '../../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import ShowMore from '../show-more/show-more';
+import UserBlock from '../../../user-block/user-block';
 import type { State } from '../../../../types/state';
 import type { MainPageProps } from './type';
-import { AppRoute, AuthorizationStatus } from '../../../../const';
-import { Link } from 'react-router-dom';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-const mapStateToProps = ({filteredFilms, authorizationStatus}: State) => ({
+const mapStateToProps = ({filteredFilms}: State) => ({
   filteredFilms,
-  authorizationStatus,
 });
 
 const connector = connect(mapStateToProps);
@@ -24,7 +22,7 @@ const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
 
-export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainPageProps): JSX.Element {
+export function Main({films, filteredFilms }: ConnectedMainPageProps): JSX.Element {
   const {
     name,
     genre,
@@ -58,27 +56,7 @@ export function Main({films, filteredFilms, authorizationStatus}: ConnectedMainP
             </a>
           </div>
 
-          <ul className="user-block">
-            {
-              authorizationStatus === AuthorizationStatus.Auth ?
-                (
-                  <>
-                    <li className="user-block__item">
-                      <div className="user-block__avatar">
-                        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                      </div>
-                    </li>
-                    <li className="user-block__item">
-                      <Link className="user-block__link" to="#">user@mail.com</Link>
-                    </li>
-                  </>
-                ) : (
-                  <li className="user-block__item">
-                    <Link className="user-block__link" to={AppRoute.SignIn}>Sign in</Link>
-                  </li>
-                )
-            }
-          </ul>
+          <UserBlock />
         </header>
 
         <div className="film-card__wrap">
