@@ -57,16 +57,20 @@ export const checkAuthAction = (): ThunkActionResult =>
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
-      toast.error('Auth failed');
+      toast.error('Authorization failed');
     }
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    try {
+      const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      toast.error('Signing in failed');
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>

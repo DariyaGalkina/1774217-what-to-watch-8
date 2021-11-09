@@ -7,15 +7,15 @@ import {
   connect,
   ConnectedProps
 } from 'react-redux';
-import AddReview from '../add-review-page/add-review/add-review';
-import Film from '../film-page/film/film';
+import AddReview from '../pages/add-review-page/add-review/add-review';
+import Film from '../pages/film-page/film/film';
 import Loading from '../loading/loading';
-import Main from '../main-page/main/main';
-import MyList from '../my-list/my-list';
+import Main from '../pages/main-page/main/main';
+import MyList from '../pages/my-list-page/my-list';
 import NotFound from '../not-found/not-found';
-import Player from '../player/player';
+import Player from '../pages/player-page/player';
 import PrivateRoute from '../private-route/private-route';
-import SignIn from '../sign-in/sign-in';
+import SignIn from '../pages/sign-in-page/sign-in';
 import { browserHistory } from '../../browser-history';
 import {
   AppRoute,
