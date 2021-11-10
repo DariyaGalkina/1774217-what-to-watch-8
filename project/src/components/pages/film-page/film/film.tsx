@@ -17,7 +17,6 @@ import {
   fetchSimilarFilmsAction
 } from '../../../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../../../const';
-import type { FilmProps } from '../../../../types/film';
 import type { State } from '../../../../types/state';
 import type { ThunkAppDispatch } from '../../../../types/action';
 
@@ -66,7 +65,7 @@ export function Film({
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
-  if (currentFilm?.id !== filmId) {
+  if (currentFilm.id !== filmId) {
     getCurrentFilm(filmId);
 
     return (
@@ -85,7 +84,7 @@ export function Film({
     genre,
     released,
     posterImage,
-  } = currentFilm as FilmProps;
+  } = currentFilm;
 
   return (
     <>
@@ -149,7 +148,7 @@ export function Film({
 
             <FilmTabs
               id={filmId}
-              film={currentFilm as FilmProps}
+              film={currentFilm}
               reviews={reviews}
             />
           </div>

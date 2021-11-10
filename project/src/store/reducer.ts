@@ -12,10 +12,11 @@ import {
   ActionType
 } from '../types/action';
 import type { State } from '../types/state';
+import { FilmProps } from '../types/film';
 
 const initialState: State = {
   currentGenre: Genres.All,
-  currentFilm: null,
+  currentFilm: {} as FilmProps,
   filmList: [],
   filteredFilms: [],
   similarFilms: [],

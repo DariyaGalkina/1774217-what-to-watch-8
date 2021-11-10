@@ -11,7 +11,6 @@ import Loading from '../../../loading/loading';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
 import { AppRoute } from '../../../../const';
-import type { FilmProps } from '../../../../types/film';
 import type { State } from '../../../../types/state';
 import type { ThunkAppDispatch } from '../../../../types/action';
 
@@ -33,7 +32,7 @@ export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.El
   const {id}: {id: string} = useParams();
   const filmId = Number(id);
 
-  if (currentFilm?.id !== filmId) {
+  if (currentFilm.id !== filmId) {
     getCurrentFilm(filmId);
 
     return <Loading />;
@@ -43,7 +42,7 @@ export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.El
     name,
     posterImage,
     backgroundImage,
-  } = currentFilm as FilmProps;
+  } = currentFilm;
 
   return (
     <section className="film-card film-card--full">

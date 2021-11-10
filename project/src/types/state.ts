@@ -4,7 +4,7 @@ import { ReviewProps } from './review';
 
 export type State = {
   currentGenre: string,
-  currentFilm: FilmProps | null,
+  currentFilm: FilmProps,
   filmList: FilmProps[],
   filteredFilms: FilmProps[],
   similarFilms: FilmProps[],

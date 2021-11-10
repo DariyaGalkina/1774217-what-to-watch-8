@@ -8,7 +8,7 @@ import type { State } from '../../../../types/state';
 const MAX_SIMILAR_FILMS = 4;
 
 const mapStateToProps = ({currentFilm, similarFilms}: State) => ({
-  currentFilmId: currentFilm?.id,
+  currentFilmId: currentFilm.id,
   similarFilms,
 });
 
