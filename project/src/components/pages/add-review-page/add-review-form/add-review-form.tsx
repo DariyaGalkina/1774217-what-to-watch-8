@@ -19,7 +19,7 @@ const MIN_POST_LENGTH = 50;
 const MAX_POST_LENGTH = 400;
 
 const mapStateToProps = ({currentFilm}: State) => ({
-  filmId: currentFilm?.id,
+  filmId: currentFilm.id,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
@@ -58,7 +58,7 @@ export function AddReviewForm({filmId, sendReview}: PropsFromRedux): JSX.Element
     };
 
     setIsFormSending(true);
-    sendReview(filmId as number, postData)
+    sendReview(filmId, postData)
       .then(() => setIsFormSending(false));
   };
 

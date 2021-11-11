@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   loadFilm,
   loadFilms,
@@ -21,7 +22,6 @@ import type { AuthData } from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
 import type { ReviewPost, ReviewProps } from '../types/review';
 import type { ThunkActionResult } from '../types/action';
-import { toast } from 'react-toastify';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -36,6 +36,7 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
       dispatch(loadFilm(data));
     } catch {
       dispatch(redirectToRoute('/404'));
+      toast.error('There\'s no such film');
     }
   };
 
@@ -57,7 +58,7 @@ export const checkAuthAction = (): ThunkActionResult =>
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
-      toast.error('Authorization failed');
+      toast.info('You aren\'t authorized');
     }
   };
 

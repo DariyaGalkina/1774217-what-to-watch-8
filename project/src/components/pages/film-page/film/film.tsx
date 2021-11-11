@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   connect,
   ConnectedProps
@@ -11,38 +12,19 @@ import FilmTabs from '../film-tabs/film-tabs';
 import Loading from '../../../loading/loading';
 import SimilarFilms from '../similar-films/similar-films';
 import UserBlock from '../../../user-block/user-block';
-import {
-  fetchFilmAction,
-  fetchReviewsAction,
-  fetchSimilarFilmsAction
-} from '../../../../store/api-actions';
+import { fetchFilmAction } from '../../../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../../../const';
 import type { State } from '../../../../types/state';
 import type { ThunkAppDispatch } from '../../../../types/action';
 
-const mapStateToProps = ({
+const mapStateToProps = ({authorizationStatus, currentFilm}: State) => ({
   authorizationStatus,
   currentFilm,
-  reviews,
-  isSimilarFilmsLoaded,
-  isReviewsLoaded,
-}: State) => ({
-  authorizationStatus,
-  currentFilm,
-  reviews,
-  isSimilarFilmsLoaded,
-  isReviewsLoaded,
 });
 
 const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
   getCurrentFilm(id: number) {
     dispatch(fetchFilmAction(id));
-  },
-  getSimilarFilms(id: number) {
-    dispatch(fetchSimilarFilmsAction(id));
-  },
-  getReviews(id: number) {
-    dispatch(fetchReviewsAction(id));
   },
 });
 
@@ -50,32 +32,19 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export function Film({
-  authorizationStatus,
-  currentFilm,
-  reviews,
-  isSimilarFilmsLoaded,
-  isReviewsLoaded,
-  getCurrentFilm,
-  getSimilarFilms,
-  getReviews,
-}: PropsFromRedux): JSX.Element {
-
+export function Film({authorizationStatus, currentFilm, getCurrentFilm}: PropsFromRedux): JSX.Element {
   const history = useHistory();
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
+  useEffect(() => {
+    if (currentFilm.id !== filmId) {
+      getCurrentFilm(filmId);
+    }
+  });
+
   if (currentFilm.id !== filmId) {
-    getCurrentFilm(filmId);
-
-    return (
-      <Loading />
-    );
-  }
-
-  if (!isSimilarFilmsLoaded && !isReviewsLoaded) {
-    getSimilarFilms(filmId);
-    getReviews(filmId);
+    return <Loading />;
   }
 
   const {
@@ -149,16 +118,13 @@ export function Film({
             <FilmTabs
               id={filmId}
               film={currentFilm}
-              reviews={reviews}
             />
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          {
-            isSimilarFilmsLoaded ? (<SimilarFilms />) : (<Loading />)
-          }
+          <SimilarFilms />
         </section>
 
         <footer className="page-footer">

@@ -47,8 +47,6 @@ export const reducer = (state: State = initialState, action: Actions): State => 
       return {
         ...state,
         currentFilm: adaptToClient(action.payload),
-        similarFilms: [],
-        reviews: [],
         isSimilarFilmsLoaded: false,
         isReviewsLoaded: false,
       };

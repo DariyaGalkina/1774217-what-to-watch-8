@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   connect,
   ConnectedProps
@@ -32,9 +33,13 @@ export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.El
   const {id}: {id: string} = useParams();
   const filmId = Number(id);
 
-  if (currentFilm.id !== filmId) {
-    getCurrentFilm(filmId);
+  useEffect(() => {
+    if (currentFilm.id !== filmId) {
+      getCurrentFilm(filmId);
+    }
+  });
 
+  if (currentFilm.id !== filmId) {
     return <Loading />;
   }
 

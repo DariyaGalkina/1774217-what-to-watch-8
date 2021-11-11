@@ -25,7 +25,9 @@ const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
 
-const store = createStore(reducer, composeWithDevTools(
+const composeEnhancers = composeWithDevTools({trace: true, traceLimit: 20});
+
+const store = createStore(reducer, composeEnhancers(
   applyMiddleware(thunk.withExtraArgument(api)),
   applyMiddleware(redirect),
 ));

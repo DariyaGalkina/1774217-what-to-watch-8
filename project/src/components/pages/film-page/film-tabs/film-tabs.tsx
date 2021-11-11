@@ -10,7 +10,7 @@ const FilmTab = {
   REVIEWS: 'Reviews',
 };
 
-export default function FilmTabs({id, film, reviews}: FilmTabsProps) : JSX.Element {
+export default function FilmTabs({id, film}: FilmTabsProps) : JSX.Element {
   const urlHash = document.location.hash.replace('#', '');
 
   const renderActiveTab = (tab: string) => {
@@ -20,7 +20,7 @@ export default function FilmTabs({id, film, reviews}: FilmTabsProps) : JSX.Eleme
       case FilmTab.DETAILS:
         return <FilmTabDetails film={film} />;
       case FilmTab.REVIEWS:
-        return <FilmTabReviews reviews={reviews}/>;
+        return <FilmTabReviews />;
     }
   };
 
