@@ -68,7 +68,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireLogout, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
-    });
+    })
+    .addDefaultCase((state) => state);
 });
 
 // export const reducer = (state: State = initialState, action: Actions): State => {

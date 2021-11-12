@@ -1,11 +1,9 @@
 import { Middleware } from '@reduxjs/toolkit';
 import { browserHistory } from '../../browser-history';
-import { reducer } from '../reducer';
 import { ActionType } from '../../types/action';
+import { State } from '../../types/state';
 
-type Reducer = ReturnType<typeof reducer>;
-
-export const redirect: Middleware<unknown, Reducer> = (_store) => (next) => (action) => {
+export const redirect: Middleware<unknown, State> = (_store) => (next) => (action) => {
   if (action.type === ActionType.RedirectToRoute) {
     browserHistory.push(action.payload);
   }
