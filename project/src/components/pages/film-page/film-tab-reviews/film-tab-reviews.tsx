@@ -10,7 +10,7 @@ import {
   getCurrentFilm,
   getIsReviewsLoaded,
   getReviews
-} from '../../../../store/selectors';
+} from '../../../../store/current-film/selectors';
 
 export default function FilmTabReviews() : JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);

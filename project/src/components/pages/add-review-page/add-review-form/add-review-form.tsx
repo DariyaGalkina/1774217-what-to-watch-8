@@ -10,7 +10,7 @@ import {
 } from 'react-redux';
 import RatingStars from '../rating-stars/rating-stars';
 import { sendReviewAction } from '../../../../store/api-actions';
-import { getCurrentFilm } from '../../../../store/selectors';
+import { getCurrentFilm } from '../../../../store/current-film/selectors';
 import type { ThunkAppDispatch } from '../../../../types/action';
 import type { ReviewPost } from '../../../../types/review';
 

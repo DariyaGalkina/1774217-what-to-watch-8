@@ -6,7 +6,7 @@ import {
   changeGenre,
   filterFilms
 } from '../../../../store/action';
-import { getCurrentGenre } from '../../../../store/selectors';
+import { getCurrentGenre } from '../../../../store/filter/selectors';
 import { Genres } from '../../../../const';
 import type { FilmProps } from '../../../../types/film';
 import type { GenreListProps } from './type';

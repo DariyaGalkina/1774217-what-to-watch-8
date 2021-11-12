@@ -1,7 +1,7 @@
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentFilm } from '../../../store/selectors';
+import { getCurrentFilm } from '../../../store/current-film/selectors';
 import { fetchFilmAction } from '../../../store/api-actions';
 import Loading from '../../loading/loading';
 

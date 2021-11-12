@@ -4,7 +4,7 @@ import {
 } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { getAuthorizationStatus } from '../../store/auth/selectors';
 import {
   AppRoute,
   AuthorizationStatus

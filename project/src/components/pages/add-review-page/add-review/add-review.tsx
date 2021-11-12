@@ -11,7 +11,7 @@ import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../../../loading/loading';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
-import { getCurrentFilm } from '../../../../store/selectors';
+import { getCurrentFilm } from '../../../../store/current-film/selectors';
 import { AppRoute } from '../../../../const';
 
 export default function AddReview(): JSX.Element {

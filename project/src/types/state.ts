@@ -1,16 +1,28 @@
-import { FilmProps } from './film';
+import { RootState } from '../store/root-reducer';
 import { AuthorizationStatus } from '../const';
-import { ReviewProps } from './review';
+import type { FilmProps } from '../types/film';
+import type { ReviewProps } from '../types/review';
 
-export type State = {
-  currentGenre: string,
-  currentFilm: FilmProps,
+export type FilmListState = {
   filmList: FilmProps[],
+  isDataLoaded: boolean,
+};
+
+export type FilterState = {
+  currentGenre: string,
   filteredFilms: FilmProps[],
+};
+
+export type CurrentFilmState = {
+  currentFilm: FilmProps,
   similarFilms: FilmProps[],
   reviews: ReviewProps[],
-  isDataLoaded: boolean,
   isSimilarFilmsLoaded: boolean,
   isReviewsLoaded: boolean,
+};
+
+export type AuthState = {
   authorizationStatus: AuthorizationStatus,
 }
+
+export type State = RootState;

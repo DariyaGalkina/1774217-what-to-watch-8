@@ -6,7 +6,7 @@ import {
   Redirect,
   RouteProps
 } from 'react-router-dom';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { getAuthorizationStatus } from '../../store/auth/selectors';
 import {
   AppRoute,
   AuthorizationStatus

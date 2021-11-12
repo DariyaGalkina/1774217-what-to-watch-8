@@ -14,11 +14,11 @@ import Player from '../pages/player-page/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../pages/sign-in-page/sign-in';
 import { browserHistory } from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/auth/selectors';
 import {
-  getAuthorizationStatus,
   getFilmList,
   getIsDataLoaded
-} from '../../store/selectors';
+} from '../../store/film-list/selectors';
 import {
   AppRoute,
   AuthorizationStatus

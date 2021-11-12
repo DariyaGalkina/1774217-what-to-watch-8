@@ -10,7 +10,7 @@ import {
   getCurrentFilm,
   getIsSimilarFilmsLoaded,
   getSimilarFilms
-} from '../../../../store/selectors';
+} from '../../../../store/current-film/selectors';
 
 const MAX_SIMILAR_FILMS = 4;
 

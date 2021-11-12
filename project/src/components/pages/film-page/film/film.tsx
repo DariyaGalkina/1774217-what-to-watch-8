@@ -13,10 +13,8 @@ import Loading from '../../../loading/loading';
 import SimilarFilms from '../similar-films/similar-films';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
-import {
-  getAuthorizationStatus,
-  getCurrentFilm
-} from '../../../../store/selectors';
+import { getAuthorizationStatus } from '../../../../store/auth/selectors';
+import { getCurrentFilm } from '../../../../store/current-film/selectors';
 import {
   AppRoute,
   AuthorizationStatus

@@ -1,24 +1,39 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import {
+  useEffect,
+  useState
+} from 'react';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import FilmList from '../../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
-import { getFilteredFilms } from '../../../../store/selectors';
+import { filterFilms } from '../../../../store/action';
+import { getFilteredFilms } from '../../../../store/filter/selectors';
 import type { MainPageProps } from './type';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
 export default function Main({films}: MainPageProps): JSX.Element {
+  const dispatch = useDispatch();
   const filteredFilms = useSelector(getFilteredFilms);
+
+  useEffect(() => {
+    if (filteredFilms.length === 0) {
+      dispatch(filterFilms(films));
+    }
+  });
+
   const {
     name,
     genre,
     released,
     posterImage,
     backgroundImage,
-  } = filteredFilms[0];
+  } = films[0];
 
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
   const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
