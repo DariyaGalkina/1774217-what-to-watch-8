@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import {
   useHistory,
@@ -13,33 +13,31 @@ import Loading from '../../../loading/loading';
 import SimilarFilms from '../similar-films/similar-films';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
-import { AppRoute, AuthorizationStatus } from '../../../../const';
-import type { State } from '../../../../types/state';
-import type { ThunkAppDispatch } from '../../../../types/action';
+import {
+  getAuthorizationStatus,
+  getCurrentFilm
+} from '../../../../store/selectors';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../../../const';
 
-const mapStateToProps = ({authorizationStatus, currentFilm}: State) => ({
-  authorizationStatus,
-  currentFilm,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getCurrentFilm(id: number) {
-    dispatch(fetchFilmAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function Film({authorizationStatus, currentFilm, getCurrentFilm}: PropsFromRedux): JSX.Element {
+export default function Film(): JSX.Element {
+  const currentFilm = useSelector(getCurrentFilm);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
   const history = useHistory();
+
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
+  const getFilm = (currentFilmId: number) => {
+    dispatch(fetchFilmAction(currentFilmId));
+  };
+
   useEffect(() => {
     if (currentFilm.id !== filmId) {
-      getCurrentFilm(filmId);
+      getFilm(filmId);
     }
   });
 
@@ -144,5 +142,3 @@ export function Film({authorizationStatus, currentFilm, getCurrentFilm}: PropsFr
     </>
   );
 }
-
-export default connector(Film);

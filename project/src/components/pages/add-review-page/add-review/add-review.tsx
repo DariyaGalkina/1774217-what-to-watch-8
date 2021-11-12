@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import {
   Link,
@@ -11,31 +11,22 @@ import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../../../loading/loading';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
+import { getCurrentFilm } from '../../../../store/selectors';
 import { AppRoute } from '../../../../const';
-import type { State } from '../../../../types/state';
-import type { ThunkAppDispatch } from '../../../../types/action';
 
-const mapStateToProps = ({currentFilm}: State) => ({
-  currentFilm,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getCurrentFilm(id: number) {
-    dispatch(fetchFilmAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.Element {
+export default function AddReview(): JSX.Element {
+  const currentFilm = useSelector(getCurrentFilm);
+  const dispatch = useDispatch();
   const {id}: {id: string} = useParams();
   const filmId = Number(id);
 
+  const getFilm = (currentFilmId: number) => {
+    dispatch(fetchFilmAction(currentFilmId));
+  };
+
   useEffect(() => {
     if (currentFilm.id !== filmId) {
-      getCurrentFilm(filmId);
+      getFilm(filmId);
     }
   });
 
@@ -90,5 +81,3 @@ export function AddReview({currentFilm, getCurrentFilm}: PropsFromRedux): JSX.El
     </section>
   );
 }
-
-export default connector(AddReview);

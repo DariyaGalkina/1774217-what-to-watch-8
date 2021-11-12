@@ -1,42 +1,32 @@
 import { useEffect } from 'react';
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import FilmList from '../../../film-list/film-list';
 import Loading from '../../../loading/loading';
 import { fetchSimilarFilmsAction } from '../../../../store/api-actions';
-import type { ThunkAppDispatch } from '../../../../types/action';
-import type { State } from '../../../../types/state';
+import {
+  getCurrentFilm,
+  getIsSimilarFilmsLoaded,
+  getSimilarFilms
+} from '../../../../store/selectors';
 
 const MAX_SIMILAR_FILMS = 4;
 
-const mapStateToProps = ({currentFilm, similarFilms, isSimilarFilmsLoaded}: State) => ({
-  currentFilmId: currentFilm.id,
-  similarFilms,
-  isSimilarFilmsLoaded,
-});
+export default function SimilarFilms(): JSX.Element {
+  const currentFilm = useSelector(getCurrentFilm);
+  const similarFilms = useSelector(getSimilarFilms);
+  const isSimilarFilmsLoaded = useSelector(getIsSimilarFilmsLoaded);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getSimilarFilms(id: number) {
+  const getSimilarFilmList = (id: number) => {
     dispatch(fetchSimilarFilmsAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function SimilarFilms({
-  currentFilmId,
-  similarFilms,
-  isSimilarFilmsLoaded,
-  getSimilarFilms,
-}: PropsFromRedux): JSX.Element {
+  };
 
   useEffect(() => {
     if (!isSimilarFilmsLoaded) {
-      getSimilarFilms(currentFilmId);
+      getSimilarFilmList(currentFilm.id);
     }
   });
 
@@ -53,7 +43,7 @@ export function SimilarFilms({
           <>
             <h2 className="catalog__title">More like this</h2>
             <FilmList films={similarFilms
-              .filter((film) => film.id !== currentFilmId)
+              .filter((film) => film.id !== currentFilm.id)
               .slice(0, MAX_SIMILAR_FILMS)}
             />
           </>
@@ -62,5 +52,3 @@ export function SimilarFilms({
     </div>
   );
 }
-
-export default connector(SimilarFilms);

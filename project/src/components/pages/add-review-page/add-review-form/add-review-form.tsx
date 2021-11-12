@@ -5,38 +5,29 @@ import {
   useState
 } from 'react';
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import RatingStars from '../rating-stars/rating-stars';
 import { sendReviewAction } from '../../../../store/api-actions';
-import { ThunkAppDispatch } from '../../../../types/action';
-import { ReviewPost } from '../../../../types/review';
-import { State } from '../../../../types/state';
+import { getCurrentFilm } from '../../../../store/selectors';
+import type { ThunkAppDispatch } from '../../../../types/action';
+import type { ReviewPost } from '../../../../types/review';
 
 const DEFAULT_RATING = 0;
 const MIN_POST_LENGTH = 50;
 const MAX_POST_LENGTH = 400;
 
-const mapStateToProps = ({currentFilm}: State) => ({
-  filmId: currentFilm.id,
-});
-
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  sendReview(id: number, data: ReviewPost) {
-    return dispatch(sendReviewAction(id, data));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function AddReviewForm({filmId, sendReview}: PropsFromRedux): JSX.Element {
+export default function AddReviewForm(): JSX.Element {
   const [userInput, setUserInput] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isFormSending, setIsFormSending] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+
+  const currentFilm = useSelector(getCurrentFilm);
+  const dispatch = useDispatch<ThunkAppDispatch>();
+
+  const sendReview = (id: number, data: ReviewPost) => dispatch(sendReviewAction(id, data));
 
   useEffect(() => {
     const isRatingValid = rating > DEFAULT_RATING;
@@ -58,7 +49,7 @@ export function AddReviewForm({filmId, sendReview}: PropsFromRedux): JSX.Element
     };
 
     setIsFormSending(true);
-    sendReview(filmId, postData)
+    sendReview(currentFilm.id, postData)
       .then(() => setIsFormSending(false));
   };
 
@@ -98,5 +89,3 @@ export function AddReviewForm({filmId, sendReview}: PropsFromRedux): JSX.Element
     </div>
   );
 }
-
-export default connector(AddReviewForm);

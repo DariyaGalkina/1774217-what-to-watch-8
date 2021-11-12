@@ -1,29 +1,20 @@
 import {
-  connect,
-  ConnectedProps
+  useSelector
 } from 'react-redux';
 import {
   Route,
   Redirect,
   RouteProps
 } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/selectors';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../const';
-import type { State } from '../../types/state';
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedPrivateRouteProps = PropsFromRedux & RouteProps;
-
-export function PrivateRoute(props: ConnectedPrivateRouteProps): JSX.Element {
-  const {exact, path, children, authorizationStatus} = props;
+export default function PrivateRoute(props: RouteProps): JSX.Element {
+  const {exact, path, children} = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <Route exact={exact} path={path}>
@@ -35,5 +26,3 @@ export function PrivateRoute(props: ConnectedPrivateRouteProps): JSX.Element {
     </Route>
   );
 }
-
-export default connector(PrivateRoute);

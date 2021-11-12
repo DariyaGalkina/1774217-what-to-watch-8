@@ -1,40 +1,30 @@
 import { useEffect } from 'react';
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import Loading from '../../../loading/loading';
 import Review from '../review/review';
 import { fetchReviewsAction } from '../../../../store/api-actions';
-import type { State } from '../../../../types/state';
-import type { ThunkAppDispatch } from '../../../../types/action';
+import {
+  getCurrentFilm,
+  getIsReviewsLoaded,
+  getReviews
+} from '../../../../store/selectors';
 
-const mapStateToProps = ({reviews, currentFilm, isReviewsLoaded}: State) => ({
-  currentFilmId: currentFilm.id,
-  reviews,
-  isReviewsLoaded,
-});
+export default function FilmTabReviews() : JSX.Element {
+  const currentFilm = useSelector(getCurrentFilm);
+  const reviews = useSelector(getReviews);
+  const isReviewsLoaded = useSelector(getIsReviewsLoaded);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  getReviews(id: number) {
+  const getReviewList = (id: number) => {
     dispatch(fetchReviewsAction(id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function FilmTabReviews({
-  currentFilmId,
-  reviews,
-  isReviewsLoaded,
-  getReviews,
-} : PropsFromRedux) : JSX.Element {
+  };
 
   useEffect(() => {
     if (!isReviewsLoaded) {
-      getReviews(currentFilmId);
+      getReviewList(currentFilm.id);
     }
   });
 
@@ -51,5 +41,3 @@ export function FilmTabReviews({
     </div>
   );
 }
-
-export default connector(FilmTabReviews);

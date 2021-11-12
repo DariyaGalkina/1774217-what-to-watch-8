@@ -1,28 +1,17 @@
-import {
-  connect,
-  ConnectedProps
-} from 'react-redux';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import FilmList from '../../../film-list/film-list';
 import GenreList from '../genre-list/genre-list';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
-import type { State } from '../../../../types/state';
+import { getFilteredFilms } from '../../../../store/selectors';
 import type { MainPageProps } from './type';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-const mapStateToProps = ({filteredFilms}: State) => ({
-  filteredFilms,
-});
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedMainPageProps = PropsFromRedux & MainPageProps;
-
-export function Main({films, filteredFilms }: ConnectedMainPageProps): JSX.Element {
+export default function Main({films}: MainPageProps): JSX.Element {
+  const filteredFilms = useSelector(getFilteredFilms);
   const {
     name,
     genre,
@@ -124,5 +113,3 @@ export function Main({films, filteredFilms }: ConnectedMainPageProps): JSX.Eleme
     </>
   );
 }
-
-export default connector(Main);

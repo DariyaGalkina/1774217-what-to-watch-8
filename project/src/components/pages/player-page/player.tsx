@@ -1,20 +1,38 @@
 import { useParams } from 'react-router';
-import type { PlayerProps } from './type';
-import type { FilmProps } from '../../../types/film';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentFilm } from '../../../store/selectors';
+import { fetchFilmAction } from '../../../store/api-actions';
+import Loading from '../../loading/loading';
 
 const HOUR = 60;
 
-export default function Player({films}: PlayerProps): JSX.Element {
-  const { id }: {id: string} = useParams();
+export default function Player(): JSX.Element {
+  const currentFilm = useSelector(getCurrentFilm);
+  const dispatch = useDispatch();
+  const {id}: {id: string} = useParams();
+  const filmId = Number(id);
 
-  const currentFilm = films.find((film) => film.id === Number(id));
+  const getFilm = (currentFilmId: number) => {
+    dispatch(fetchFilmAction(currentFilmId));
+  };
+
+  useEffect(() => {
+    if (currentFilm.id !== filmId) {
+      getFilm(filmId);
+    }
+  });
+
+  if (currentFilm.id !== filmId) {
+    return <Loading />;
+  }
 
   const {
     name,
     posterImage,
     videoLink,
     runTime,
-  } = currentFilm as FilmProps;
+  } = currentFilm;
 
   const playerRunTime = `${Math.floor(runTime / HOUR)}:${runTime % HOUR}:00`;
 

@@ -1,31 +1,23 @@
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/selectors';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../const';
-import type { ThunkAppDispatch } from '../../types/action';
-import type { State } from '../../types/state';
 
-const mapStateToProps = ({authorizationStatus}: State) => ({
-  authorizationStatus,
-});
+export default function UserBlock(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: ThunkAppDispatch) => ({
-  setLogout() {
+  const setLogout = () => {
     dispatch(logoutAction());
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function UserBlock({authorizationStatus, setLogout}: PropsFromRedux): JSX.Element {
   return (
     <ul className="user-block">
       {
@@ -52,5 +44,3 @@ export function UserBlock({authorizationStatus, setLogout}: PropsFromRedux): JSX
     </ul>
   );
 }
-
-export default connector(UserBlock);

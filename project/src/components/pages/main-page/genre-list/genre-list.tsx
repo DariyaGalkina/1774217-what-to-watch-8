@@ -1,42 +1,27 @@
 import {
-  connect,
-  ConnectedProps
+  useDispatch,
+  useSelector
 } from 'react-redux';
-import { Dispatch } from 'redux';
 import {
   changeGenre,
   filterFilms
 } from '../../../../store/action';
+import { getCurrentGenre } from '../../../../store/selectors';
 import { Genres } from '../../../../const';
 import type { FilmProps } from '../../../../types/film';
-import type { State } from '../../../../types/state';
 import type { GenreListProps } from './type';
 
-const mapStateToProps = ({currentGenre}: State) => ({
-  currentGenre,
-});
+export default function GenreList({films, resetShowSize}: GenreListProps): JSX.Element {
+  const currentGenre = useSelector(getCurrentGenre);
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeGenre(genre: string) {
+  const onChangeGenre = (genre: string) => {
     dispatch(changeGenre(genre));
-  },
-  onFilterFilms(films: FilmProps[]) {
-    dispatch(filterFilms(films));
-  },
-});
+  };
 
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type ConnectedGenreListProps = PropsFromRedux & GenreListProps;
-
-export function GenreList({
-  films,
-  currentGenre,
-  resetShowSize,
-  onChangeGenre,
-  onFilterFilms,
-}: ConnectedGenreListProps): JSX.Element {
+  const onFilterFilms = (filmList: FilmProps[]) => {
+    dispatch(filterFilms(filmList));
+  };
 
   const genres = [
     Genres.All,
@@ -67,5 +52,3 @@ export function GenreList({
     </ul>
   );
 }
-
-export default connector(GenreList);
