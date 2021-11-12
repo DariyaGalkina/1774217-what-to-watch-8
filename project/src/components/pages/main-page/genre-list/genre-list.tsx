@@ -8,7 +8,6 @@ import {
   filterFilms
 } from '../../../../store/action';
 import { Genres } from '../../../../const';
-import type { Actions } from '../../../../types/action';
 import type { FilmProps } from '../../../../types/film';
 import type { State } from '../../../../types/state';
 import type { GenreListProps } from './type';
@@ -17,7 +16,7 @@ const mapStateToProps = ({currentGenre}: State) => ({
   currentGenre,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeGenre(genre: string) {
     dispatch(changeGenre(genre));
   },

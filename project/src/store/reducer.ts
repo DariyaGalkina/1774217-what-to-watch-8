@@ -18,7 +18,6 @@ import {
   AuthorizationStatus,
   Genres
 } from '../const';
-// import { ActionType } from '../types/action';
 import type { State } from '../types/state';
 import type { FilmProps } from '../types/film';
 
@@ -71,47 +70,3 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addDefaultCase((state) => state);
 });
-
-// export const reducer = (state: State = initialState, action: Actions): State => {
-//   switch (action.type) {
-//     case ActionType.ChangeGenre:
-//       return {...state, currentGenre: action.payload};
-//     case ActionType.FilterFilms:
-//       return {...state, filteredFilms: filterFilmsByGenre(action.payload, state.currentGenre)};
-//     case ActionType.LoadFilms: {
-//       const adaptedFilms = adaptFilmsToClient(action.payload);
-
-//       return {
-//         ...state,
-//         filmList: adaptedFilms,
-//         filteredFilms: adaptedFilms,
-//         isDataLoaded: true,
-//       };
-//     }
-//     case ActionType.LoadFilm:
-//       return {
-//         ...state,
-//         currentFilm: adaptToClient(action.payload),
-//         isSimilarFilmsLoaded: false,
-//         isReviewsLoaded: false,
-//       };
-//     case ActionType.LoadSimilarFilms:
-//       return {
-//         ...state,
-//         similarFilms: adaptFilmsToClient(action.payload),
-//         isSimilarFilmsLoaded: true,
-//       };
-//     case ActionType.LoadReviews:
-//       return {
-//         ...state,
-//         reviews: action.payload,
-//         isReviewsLoaded: true,
-//       };
-//     case ActionType.RequireAuthorization:
-//       return {...state, authorizationStatus: action.payload};
-//     case ActionType.RequireLogout:
-//       return {...state, authorizationStatus: AuthorizationStatus.NoAuth};
-//     default:
-//       return state;
-//   }
-// };

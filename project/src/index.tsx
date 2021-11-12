@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import thunk from 'redux-thunk';
 import { ToastContainer } from 'react-toastify';
-// import {
-//   createStore,
-//   applyMiddleware
-// } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import App from './components/app/app';
 import {
   checkAuthAction,
@@ -18,20 +13,11 @@ import { reducer } from './store/reducer';
 import { requireAuthorization } from './store/action';
 import { createAPI } from './services/api';
 import { AuthorizationStatus } from './const';
-// import type { ThunkAppDispatch } from './types/action';
 import 'react-toastify/dist/ReactToastify.css';
-import { configureStore } from '@reduxjs/toolkit';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
 );
-
-// const composeEnhancers = composeWithDevTools({trace: true, traceLimit: 20});
-
-// const store = createStore(reducer, composeEnhancers(
-//   applyMiddleware(thunk.withExtraArgument(api)),
-//   applyMiddleware(redirect),
-// ));
 
 const store = configureStore({
   reducer: reducer,
@@ -42,9 +28,6 @@ const store = configureStore({
       },
     }).concat(redirect),
 });
-
-// (store.dispatch as ThunkAppDispatch)(checkAuthAction());
-// (store.dispatch as ThunkAppDispatch)(fetchFilmsAction());
 
 (store.dispatch)(checkAuthAction());
 (store.dispatch)(fetchFilmsAction());
