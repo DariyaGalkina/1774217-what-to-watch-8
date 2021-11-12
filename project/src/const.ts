@@ -14,6 +14,7 @@ export enum APIRoute {
   Reviews = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
+  NotFound = '/404',
 }
 
 export enum AuthorizationStatus {
@@ -24,4 +25,11 @@ export enum AuthorizationStatus {
 
 export enum Genres {
   All = 'All genres',
+}
+
+export enum ToastMessage {
+  Film = 'There\'s no such film',
+  Auth = 'You aren\'t authorized',
+  Login = 'Signing in failed',
+  Review = 'Sending failed',
 }

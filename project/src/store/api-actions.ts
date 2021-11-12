@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import {
   loadFilm,
   loadFilms,
@@ -15,13 +16,13 @@ import {
 import {
   APIRoute,
   AppRoute,
-  AuthorizationStatus
+  AuthorizationStatus,
+  ToastMessage
 } from '../const';
 import type { AuthData } from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
 import type { ReviewPost, ReviewProps } from '../types/review';
 import type { ThunkActionResult } from '../types/action';
-import { toast } from 'react-toastify';
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -35,7 +36,8 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
       const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
       dispatch(loadFilm(data));
     } catch {
-      dispatch(redirectToRoute('/404'));
+      dispatch(redirectToRoute(APIRoute.NotFound));
+      toast.error(ToastMessage.Film);
     }
   };
 
@@ -57,16 +59,20 @@ export const checkAuthAction = (): ThunkActionResult =>
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
-      toast.error('Auth failed');
+      toast.info(ToastMessage.Auth);
     }
   };
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
+    try {
+      const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(redirectToRoute(AppRoute.Main));
+    } catch {
+      toast.error(ToastMessage.Login);
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>
@@ -83,6 +89,6 @@ export const sendReviewAction = (filmId: number, review: ReviewPost ): ThunkActi
       dispatch(loadReviews(data));
       dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#Overview`)));
     } catch {
-      toast.error('Sending failed');
+      toast.error(ToastMessage.Review);
     }
   };

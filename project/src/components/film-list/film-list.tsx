@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import FilmCard from '../film-card/film-card';
 import type { FilmListProps } from './type';
 
-export default function FilmList({films}: FilmListProps): JSX.Element {
+function FilmList({films}: FilmListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
       {films.map((film) => (
@@ -16,3 +17,5 @@ export default function FilmList({films}: FilmListProps): JSX.Element {
     </div>
   );
 }
+
+export default memo(FilmList);

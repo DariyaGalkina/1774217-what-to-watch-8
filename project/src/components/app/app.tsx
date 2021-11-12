@@ -3,37 +3,32 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import {
-  connect,
-  ConnectedProps
-} from 'react-redux';
-import AddReview from '../add-review-page/add-review/add-review';
-import Film from '../film-page/film/film';
+import { useSelector } from 'react-redux';
+import AddReview from '../pages/add-review-page/add-review/add-review';
+import Film from '../pages/film-page/film/film';
 import Loading from '../loading/loading';
-import Main from '../main-page/main/main';
-import MyList from '../my-list/my-list';
+import Main from '../pages/main-page/main/main';
+import MyList from '../pages/my-list-page/my-list';
 import NotFound from '../not-found/not-found';
-import Player from '../player/player';
+import Player from '../pages/player-page/player';
 import PrivateRoute from '../private-route/private-route';
-import SignIn from '../sign-in/sign-in';
+import SignIn from '../pages/sign-in-page/sign-in';
 import { browserHistory } from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/auth/selectors';
+import {
+  getFilmList,
+  getIsDataLoaded
+} from '../../store/film-list/selectors';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../const';
-import type { State } from '../../types/state';
 
-const mapStateToProps = ({filmList, isDataLoaded, authorizationStatus}: State) => ({
-  films: filmList,
-  isDataLoaded,
-  authorizationStatus,
-});
+export default function App(): JSX.Element {
+  const films = useSelector(getFilmList);
+  const isDataLoaded = useSelector(getIsDataLoaded);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux): JSX.Element {
   if (authorizationStatus === AuthorizationStatus.Unknown || !isDataLoaded) {
     return (
       <Loading />
@@ -59,7 +54,7 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
           <AddReview />
         </PrivateRoute>
         <Route path={AppRoute.Player} exact>
-          <Player films={films} />
+          <Player />
         </Route>
         <Route>
           <NotFound />
@@ -68,5 +63,3 @@ export function App({films, isDataLoaded, authorizationStatus}: PropsFromRedux):
     </BrowserRouter>
   );
 }
-
-export default connector(App);
