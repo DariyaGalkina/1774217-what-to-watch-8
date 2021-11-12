@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   useDispatch,
   useSelector
@@ -10,7 +11,7 @@ import {
   AuthorizationStatus
 } from '../../const';
 
-export default function UserBlock(): JSX.Element {
+function UserBlock(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
@@ -44,3 +45,5 @@ export default function UserBlock(): JSX.Element {
     </ul>
   );
 }
+
+export default memo(UserBlock);

@@ -1,4 +1,7 @@
-import { useEffect } from 'react';
+import {
+  memo,
+  useEffect
+} from 'react';
 import {
   useDispatch,
   useSelector
@@ -14,7 +17,7 @@ import {
 
 const MAX_SIMILAR_FILMS = 4;
 
-export default function SimilarFilms(): JSX.Element {
+function SimilarFilms(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
   const similarFilms = useSelector(getSimilarFilms);
   const isSimilarFilmsLoaded = useSelector(getIsSimilarFilmsLoaded);
@@ -52,3 +55,5 @@ export default function SimilarFilms(): JSX.Element {
     </div>
   );
 }
+
+export default memo(SimilarFilms);

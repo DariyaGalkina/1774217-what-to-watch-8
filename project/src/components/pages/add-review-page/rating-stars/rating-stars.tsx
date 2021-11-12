@@ -1,9 +1,12 @@
-import { Fragment } from 'react';
+import {
+  Fragment,
+  memo
+} from 'react';
 import { RatingStarsProps } from './type';
 
 const MAX_RATING = 10;
 
-export default function RatingStars({onChange, isDisabled}: RatingStarsProps): JSX.Element {
+function RatingStars({onChange, isDisabled}: RatingStarsProps): JSX.Element {
   return (
     <div className="rating__stars">
       {
@@ -34,3 +37,5 @@ export default function RatingStars({onChange, isDisabled}: RatingStarsProps): J
     </div>
   );
 }
+
+export default memo(RatingStars);

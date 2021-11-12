@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   FormEvent,
+  useCallback,
   useEffect,
   useState
 } from 'react';
@@ -36,9 +37,10 @@ export default function AddReviewForm(): JSX.Element {
     setIsFormValid(isRatingValid && isTextAreaValid);
   }, [rating, userInput]);
 
-  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setRating(+evt.currentTarget.value);
-  };
+  const handleRatingChange = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => setRating(+evt.currentTarget.value),
+    [],
+  );
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();

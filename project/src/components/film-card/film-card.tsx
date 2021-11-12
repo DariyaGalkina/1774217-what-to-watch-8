@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import {
+  memo,
+  useState
+} from 'react';
 import { Link } from 'react-router-dom';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
-export default function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
+function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
   const [isPlayed, setIsPlayed] = useState(false);
 
   return (
@@ -26,3 +29,5 @@ export default function FilmCard({id, filmName, preview, previewVideoLink}: Film
     </article>
   );
 }
+
+export default memo(FilmCard);
