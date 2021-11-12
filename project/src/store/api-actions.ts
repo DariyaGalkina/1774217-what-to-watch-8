@@ -16,7 +16,8 @@ import {
 import {
   APIRoute,
   AppRoute,
-  AuthorizationStatus
+  AuthorizationStatus,
+  ToastMessage
 } from '../const';
 import type { AuthData } from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
@@ -35,8 +36,8 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
       const {data} = await api.get<FilmFromServer>(APIRoute.Film.replace(':id', `${filmId}`));
       dispatch(loadFilm(data));
     } catch {
-      dispatch(redirectToRoute('/404'));
-      toast.error('There\'s no such film');
+      dispatch(redirectToRoute(APIRoute.NotFound));
+      toast.error(ToastMessage.Film);
     }
   };
 
@@ -58,7 +59,7 @@ export const checkAuthAction = (): ThunkActionResult =>
       await api.get(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
-      toast.info('You aren\'t authorized');
+      toast.info(ToastMessage.Auth);
     }
   };
 
@@ -70,7 +71,7 @@ export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
-      toast.error('Signing in failed');
+      toast.error(ToastMessage.Login);
     }
   };
 
@@ -88,6 +89,6 @@ export const sendReviewAction = (filmId: number, review: ReviewPost ): ThunkActi
       dispatch(loadReviews(data));
       dispatch(redirectToRoute(AppRoute.Film.replace(':id', `${filmId}/#Overview`)));
     } catch {
-      toast.error('Sending failed');
+      toast.error(ToastMessage.Review);
     }
   };
