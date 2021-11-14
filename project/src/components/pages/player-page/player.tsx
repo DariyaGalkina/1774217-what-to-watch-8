@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentFilm } from '../../../store/current-film/selectors';
 import { fetchFilmAction } from '../../../store/api-actions';
 import Loading from '../../loading/loading';
+import { AppRoute } from '../../../const';
+import { Link } from 'react-router-dom';
 
 const HOUR = 60;
 
@@ -40,7 +42,9 @@ export default function Player(): JSX.Element {
     <div className="player">
       <video src={videoLink} className="player__video" poster={posterImage}></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>
+        <button type="button" className="player__exit">Exit</button>
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

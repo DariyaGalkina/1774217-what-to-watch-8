@@ -6,6 +6,7 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import { useHistory } from 'react-router';
 import FilmList from '../../../film-list/film-list';
 import Footer from '../../../footer/footer';
 import GenreList from '../genre-list/genre-list';
@@ -15,6 +16,7 @@ import { filterFilms } from '../../../../store/action';
 import { getPromo } from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
 import { fetchPromoAction } from '../../../../store/api-actions';
+import { AppRoute } from '../../../../const';
 import type { MainPageProps } from './type';
 
 const FILM_CARD_AMOUNT = 8;
@@ -24,6 +26,7 @@ export default function Main({films}: MainPageProps): JSX.Element {
   const promoFilm = useSelector(getPromo);
   const filteredFilms = useSelector(getFilteredFilms);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if (filteredFilms.length === 0) {
@@ -87,7 +90,9 @@ export default function Main({films}: MainPageProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button"
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${promoFilm.id}`))}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
