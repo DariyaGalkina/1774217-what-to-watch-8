@@ -10,12 +10,12 @@ import { useHistory } from 'react-router';
 import FilmList from '../../../film-list/film-list';
 import Footer from '../../../footer/footer';
 import GenreList from '../genre-list/genre-list';
+import MyListButton from '../../../my-list-btn/my-list-btn';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
 import { getPromo } from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
-import { fetchPromoAction } from '../../../../store/api-actions';
 import { AppRoute } from '../../../../const';
 import type { MainPageProps } from './type';
 
@@ -27,18 +27,13 @@ export default function Main({films}: MainPageProps): JSX.Element {
   const filteredFilms = useSelector(getFilteredFilms);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
 
   useEffect(() => {
     if (filteredFilms.length === 0) {
       dispatch(filterFilms(films));
     }
   });
-
-  useEffect(() => {
-    if (!promoFilm.id) {
-      dispatch(fetchPromoAction());
-    }
-  }, [dispatch, promoFilm]);
 
   const {
     name,
@@ -48,7 +43,6 @@ export default function Main({films}: MainPageProps): JSX.Element {
     backgroundImage,
   } = promoFilm;
 
-  const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
   const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
 
   const handleShowMoreClick = () => {
@@ -98,12 +92,8 @@ export default function Main({films}: MainPageProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton film={promoFilm}/>
               </div>
             </div>
           </div>

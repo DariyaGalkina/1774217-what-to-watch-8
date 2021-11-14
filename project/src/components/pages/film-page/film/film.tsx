@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import FilmTabs from '../film-tabs/film-tabs';
 import Footer from '../../../footer/footer';
 import Loading from '../../../loading/loading';
+import MyListButton from '../../../my-list-btn/my-list-btn';
 import SimilarFilms from '../similar-films/similar-films';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
@@ -87,12 +88,8 @@ export default function Film(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+
+                <MyListButton film={currentFilm} />
                 {
                   authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>

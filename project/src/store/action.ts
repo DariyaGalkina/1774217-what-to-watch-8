@@ -54,6 +54,10 @@ export const requireAuthorization = createAction(
 
 export const requireLogout = createAction(ActionType.RequireLogout);
 
+export const addFavorite = createAction(ActionType.AddFavorite);
+
+export const removeFavorite = createAction(ActionType.RemoveFavorite);
+
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
   (url: string) => ({payload: url}),

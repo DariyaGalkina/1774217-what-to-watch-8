@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import {
+  addFavorite,
   loadFavorite,
   loadFilm,
   loadFilms,
@@ -7,6 +8,7 @@ import {
   loadReviews,
   loadSimilarFilms,
   redirectToRoute,
+  removeFavorite,
   requireAuthorization,
   requireLogout
 } from './action';
@@ -19,7 +21,7 @@ import {
   APIRoute,
   AppRoute,
   AuthorizationStatus,
-  // FavoriteAction,
+  FavoriteAction,
   ToastMessage
 } from '../const';
 import type { AuthData } from '../types/auth-data';
@@ -107,11 +109,18 @@ export const sendReviewAction = (filmId: number, review: ReviewPost ): ThunkActi
 
 export const fetchFavoriteFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void>  => {
-    const {data} = await api.get<FilmFromServer[]>(APIRoute.Favorites);
+    const {data} = await api.get<FilmFromServer[]>(APIRoute.Favorite);
     dispatch(loadFavorite(data));
   };
 
-// export const setFavoriteAction = (filmid: number, action: FavoriteAction): ThunkActionResult =>
-//   async (dispatch, _getState, api): Promise<void> => {
-//     await api.post<FilmProps>
-//   }
+export const setFavoriteAction = (filmId: number, action: FavoriteAction): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    await api.post<FilmFromServer>(`${APIRoute.Favorite}/${filmId}/${action}`);
+
+    if (action === FavoriteAction.Add) {
+      dispatch(addFavorite());
+    }
+    if (action === FavoriteAction.Remove) {
+      dispatch(removeFavorite());
+    }
+  };
