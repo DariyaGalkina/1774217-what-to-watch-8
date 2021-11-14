@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import {
   loadFilm,
   loadFilms,
+  loadPromo,
   loadReviews,
   loadSimilarFilms,
   redirectToRoute,
@@ -23,6 +24,12 @@ import type { AuthData } from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
 import type { ReviewPost, ReviewProps } from '../types/review';
 import type { ThunkActionResult } from '../types/action';
+
+export const fetchPromoAction = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {data} = await api.get<FilmFromServer>(APIRoute.Promo);
+    dispatch(loadPromo(data));
+  };
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {

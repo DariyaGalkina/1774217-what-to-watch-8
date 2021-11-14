@@ -9,6 +9,7 @@ import {
 } from 'react-router';
 import { Link } from 'react-router-dom';
 import FilmTabs from '../film-tabs/film-tabs';
+import Footer from '../../../footer/footer';
 import Loading from '../../../loading/loading';
 import SimilarFilms from '../similar-films/similar-films';
 import UserBlock from '../../../user-block/user-block';
@@ -19,7 +20,6 @@ import {
   AppRoute,
   AuthorizationStatus
 } from '../../../../const';
-import Footer from '../../../footer/footer';
 
 export default function Film(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
@@ -30,13 +30,9 @@ export default function Film(): JSX.Element {
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
-  const getFilm = (currentFilmId: number) => {
-    dispatch(fetchFilmAction(currentFilmId));
-  };
-
   useEffect(() => {
     if (currentFilm.id !== filmId) {
-      getFilm(filmId);
+      dispatch(fetchFilmAction(filmId));
     }
   });
 

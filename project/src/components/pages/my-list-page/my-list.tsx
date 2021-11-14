@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import FilmList from '../../film-list/film-list';
+import Footer from '../../footer/footer';
 import UserBlock from '../../user-block/user-block';
 import { AppRoute } from '../../../const';
 import type { MyListProps } from './type';
-import Footer from '../../footer/footer';
 
 export default function MyList({films}: MyListProps): JSX.Element {
   const favoriteFilms = films.filter((film) => film.isFavorite);

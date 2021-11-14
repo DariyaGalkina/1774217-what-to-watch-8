@@ -7,20 +7,23 @@ import {
   useSelector
 } from 'react-redux';
 import FilmList from '../../../film-list/film-list';
+import Footer from '../../../footer/footer';
 import GenreList from '../genre-list/genre-list';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
+import { getPromo } from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
+import { fetchPromoAction } from '../../../../store/api-actions';
 import type { MainPageProps } from './type';
-import Footer from '../../../footer/footer';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
 export default function Main({films}: MainPageProps): JSX.Element {
-  const dispatch = useDispatch();
+  const promoFilm = useSelector(getPromo);
   const filteredFilms = useSelector(getFilteredFilms);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (filteredFilms.length === 0) {
@@ -28,13 +31,19 @@ export default function Main({films}: MainPageProps): JSX.Element {
     }
   });
 
+  useEffect(() => {
+    if (!promoFilm.id) {
+      dispatch(fetchPromoAction());
+    }
+  }, [dispatch, promoFilm]);
+
   const {
     name,
     genre,
     released,
     posterImage,
     backgroundImage,
-  } = films[0];
+  } = promoFilm;
 
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
   const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);

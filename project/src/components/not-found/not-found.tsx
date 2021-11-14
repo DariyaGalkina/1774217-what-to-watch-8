@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import Footer from '../footer/footer';
+import { AppRoute } from '../../const';
 
 export default function NotFound(): JSX.Element {
   return (

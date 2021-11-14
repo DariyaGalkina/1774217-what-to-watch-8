@@ -17,6 +17,11 @@ export const filterFilms = createAction(
   (films: FilmProps[]) => ({payload: films}),
 );
 
+export const loadPromo = createAction(
+  ActionType.LoadPromo,
+  (promo: FilmFromServer) => ({payload: promo}),
+);
+
 export const loadFilms = createAction(
   ActionType.LoadFilms,
   (films: FilmFromServer[]) => ({payload: films}),

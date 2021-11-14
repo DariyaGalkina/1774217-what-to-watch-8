@@ -4,6 +4,7 @@ import type { FilmProps } from '../types/film';
 import type { ReviewProps } from '../types/review';
 
 export type FilmListState = {
+  promo: FilmProps,
   filmList: FilmProps[],
   isDataLoaded: boolean,
 };
