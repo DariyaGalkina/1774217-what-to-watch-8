@@ -9,6 +9,7 @@ export enum AppRoute {
 
 export enum APIRoute {
   Films = '/films',
+  Favorites = '/favorite',
   Film = '/films/:id',
   Similar = '/films/:id/similar',
   Reviews = '/comments/:id',
@@ -41,4 +42,9 @@ export enum Grade {
   Good = 'Good',
   VeryGood = 'Very good',
   Awesome = 'Awesome',
+}
+
+export enum FavoriteAction {
+  Add = 1,
+  Remove = 0,
 }

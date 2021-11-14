@@ -14,6 +14,7 @@ export enum ActionType {
   LoadFilm = 'data/loadFilm',
   LoadSimilarFilms = 'data/loadSimilarFilms',
   LoadReviews = 'data/loadReviews',
+  LoadFavorite = 'user/loadFavorite',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   RedirectToRoute = 'app/redirect',

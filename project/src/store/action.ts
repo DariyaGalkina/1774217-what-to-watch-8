@@ -27,6 +27,11 @@ export const loadFilms = createAction(
   (films: FilmFromServer[]) => ({payload: films}),
 );
 
+export const loadFavorite = createAction(
+  ActionType.LoadFavorite,
+  (films: FilmFromServer[]) => ({payload: films}),
+);
+
 export const loadFilm = createAction(
   ActionType.LoadFilm,
   (film: FilmFromServer) => ({payload: film}),

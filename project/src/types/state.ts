@@ -24,6 +24,7 @@ export type CurrentFilmState = {
 
 export type AuthState = {
   authorizationStatus: AuthorizationStatus,
+  favoriteFilms: FilmProps[],
 }
 
 export type State = RootState;
