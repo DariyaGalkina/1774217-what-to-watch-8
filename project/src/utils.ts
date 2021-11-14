@@ -44,11 +44,11 @@ export const adaptFilmsToClient = (films: FilmFromServer[]): FilmProps[] => (
 export const getGrade = (rating: number): string => {
   if (rating === 10) {
     return Grade.Awesome;
-  } else if (rating > 7) {
+  } else if (rating >= 8) {
     return Grade.VeryGood;
-  } else if (rating > 4) {
+  } else if (rating >= 5) {
     return Grade.Good;
-  } else if (rating > 2) {
+  } else if (rating >= 3) {
     return Grade.Normal;
   } else if (rating > 0) {
     return Grade.Bad;

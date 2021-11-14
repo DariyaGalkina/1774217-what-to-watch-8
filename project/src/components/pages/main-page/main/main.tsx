@@ -13,6 +13,7 @@ import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
 import type { MainPageProps } from './type';
+import Footer from '../../../footer/footer';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
@@ -111,19 +112,7 @@ export default function Main({films}: MainPageProps): JSX.Element {
           }
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="/" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
