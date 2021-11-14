@@ -1,4 +1,7 @@
-import { Genres } from './const';
+import {
+  Genres,
+  Grade
+} from './const';
 import type {
   FilmFromServer,
   FilmProps
@@ -37,3 +40,18 @@ export const adaptToClient = (film: FilmFromServer): FilmProps => (
 export const adaptFilmsToClient = (films: FilmFromServer[]): FilmProps[] => (
   films.map((film) => adaptToClient(film))
 );
+
+export const getGrade = (rating: number): string => {
+  if (rating === 10) {
+    return Grade.Awesome;
+  } else if (rating > 7) {
+    return Grade.VeryGood;
+  } else if (rating > 4) {
+    return Grade.Good;
+  } else if (rating > 2) {
+    return Grade.Normal;
+  } else if (rating > 0) {
+    return Grade.Bad;
+  }
+  return '';
+};

@@ -33,3 +33,11 @@ export enum ToastMessage {
   Login = 'Signing in failed',
   Review = 'Sending failed',
 }
+
+export enum Grade {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome',
+}
