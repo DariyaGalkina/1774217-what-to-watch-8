@@ -10,7 +10,9 @@ import {
   redirectToRoute,
   removeFavorite,
   requireAuthorization,
-  requireLogout
+  requireLogout,
+  updateFilm,
+  updatePromo
 } from './action';
 import {
   dropToken,
@@ -114,9 +116,14 @@ export const fetchFavoriteFilms = (): ThunkActionResult =>
   };
 
 export const setFavoriteAction = (filmId: number, action: FavoriteAction): ThunkActionResult =>
-  async (dispatch, _getState, api): Promise<void> => {
-    await api.post<FilmFromServer>(`${APIRoute.Favorite}/${filmId}/${action}`);
+  async (dispatch, getState, api): Promise<void> => {
+    const {data} = await api.post<FilmFromServer>(`${APIRoute.Favorite}/${filmId}/${action}`);
 
+    dispatch(updateFilm(data));
+
+    if (getState().films.promo.id === filmId) {
+      dispatch(updatePromo(data));
+    }
     if (action === FavoriteAction.Add) {
       dispatch(addFavorite());
     }

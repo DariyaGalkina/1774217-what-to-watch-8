@@ -1,13 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
+  loadFilm,
+  loadReviews,
+  loadSimilarFilms,
+  updateFilm
+} from '../action';
+import {
   adaptFilmsToClient,
   adaptToClient
 } from '../../utils';
-import {
-  loadFilm,
-  loadReviews,
-  loadSimilarFilms
-} from '../action';
 import type { FilmProps } from '../../types/film';
 import { CurrentFilmState } from '../../types/state';
 
@@ -33,5 +34,8 @@ export const currentFilmReducer = createReducer(initialState, (builder) => {
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
       state.isReviewsLoaded = true;
+    })
+    .addCase(updateFilm, (state, action) => {
+      state.currentFilm = adaptToClient(action.payload);
     });
 });

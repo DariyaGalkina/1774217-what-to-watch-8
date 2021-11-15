@@ -15,6 +15,8 @@ export enum ActionType {
   LoadSimilarFilms = 'data/loadSimilarFilms',
   LoadReviews = 'data/loadReviews',
   LoadFavorite = 'user/loadFavorite',
+  UpdatePromo = 'user/updatePromo',
+  UpdateFilm = 'user/updateFilm',
   AddFavorite = 'user/addFavorite',
   RemoveFavorite = 'user/removeFavorite',
   RequireAuthorization = 'user/requireAuthorization',

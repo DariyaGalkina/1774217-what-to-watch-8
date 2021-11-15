@@ -1,4 +1,5 @@
 import {
+  memo,
   useEffect,
   useState
 } from 'react';
@@ -16,13 +17,13 @@ import {
 } from '../../const';
 import type { FilmProps } from '../../types/film';
 
-export default function MyListButton({film}: {film: FilmProps}): JSX.Element {
+function MyListButton({film}: {film: FilmProps}): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const [isInFavoriteList, setIsInFavoriteList] = useState(film.isFavorite);
   const history = useHistory();
   const dispatch = useDispatch();
 
-  useEffect(() => setIsInFavoriteList(film.isFavorite), [film]);
+  useEffect(() => setIsInFavoriteList(film.isFavorite), [film, history]);
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -46,3 +47,5 @@ export default function MyListButton({film}: {film: FilmProps}): JSX.Element {
     </button>
   );
 }
+
+export default memo(MyListButton);

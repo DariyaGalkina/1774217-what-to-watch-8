@@ -47,6 +47,16 @@ export const loadReviews = createAction(
   (reviews: ReviewProps[]) => ({payload: reviews}),
 );
 
+export const updatePromo = createAction(
+  ActionType.UpdatePromo,
+  (film: FilmFromServer) => ({payload: film}),
+);
+
+export const updateFilm = createAction(
+  ActionType.UpdateFilm,
+  (film: FilmFromServer) => ({payload: film}),
+);
+
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
   (authStatus: AuthorizationStatus) => ({payload: authStatus}),
