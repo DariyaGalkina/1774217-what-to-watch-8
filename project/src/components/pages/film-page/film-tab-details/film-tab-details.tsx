@@ -1,6 +1,5 @@
+import { formatRunTime } from '../../../../utils';
 import type { FilmTabDetailsProps } from './type';
-
-const HOUR = 60;
 
 export default function FilmTabDetails({film}: FilmTabDetailsProps) : JSX.Element {
   const {
@@ -10,10 +9,6 @@ export default function FilmTabDetails({film}: FilmTabDetailsProps) : JSX.Elemen
     genre,
     released,
   } = film;
-
-  const formatRunTime = (minutes: number) => (
-    minutes > HOUR ? `${Math.floor(minutes / HOUR)}h ${minutes % HOUR}m`: `${minutes}m`
-  );
 
   return (
     <div className="film-card__text film-card__row">

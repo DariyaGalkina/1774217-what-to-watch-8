@@ -17,8 +17,18 @@ export const filterFilms = createAction(
   (films: FilmProps[]) => ({payload: films}),
 );
 
+export const loadPromo = createAction(
+  ActionType.LoadPromo,
+  (promo: FilmFromServer) => ({payload: promo}),
+);
+
 export const loadFilms = createAction(
   ActionType.LoadFilms,
+  (films: FilmFromServer[]) => ({payload: films}),
+);
+
+export const loadFavorite = createAction(
+  ActionType.LoadFavorite,
   (films: FilmFromServer[]) => ({payload: films}),
 );
 
@@ -37,12 +47,26 @@ export const loadReviews = createAction(
   (reviews: ReviewProps[]) => ({payload: reviews}),
 );
 
+export const updatePromo = createAction(
+  ActionType.UpdatePromo,
+  (film: FilmFromServer) => ({payload: film}),
+);
+
+export const updateFilm = createAction(
+  ActionType.UpdateFilm,
+  (film: FilmFromServer) => ({payload: film}),
+);
+
 export const requireAuthorization = createAction(
   ActionType.RequireAuthorization,
   (authStatus: AuthorizationStatus) => ({payload: authStatus}),
 );
 
 export const requireLogout = createAction(ActionType.RequireLogout);
+
+export const addFavorite = createAction(ActionType.AddFavorite);
+
+export const removeFavorite = createAction(ActionType.RemoveFavorite);
 
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,

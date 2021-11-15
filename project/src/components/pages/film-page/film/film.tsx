@@ -9,8 +9,10 @@ import {
 } from 'react-router';
 import { Link } from 'react-router-dom';
 import FilmTabs from '../film-tabs/film-tabs';
-import Loading from '../../../loading/loading';
+import Footer from '../../../footer/footer';
+import MyListButton from '../../../my-list-btn/my-list-btn';
 import SimilarFilms from '../similar-films/similar-films';
+import Spinner from '../../../spinner/spinner';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
 import { getAuthorizationStatus } from '../../../../store/auth/selectors';
@@ -29,18 +31,14 @@ export default function Film(): JSX.Element {
   const { id }: {id: string} = useParams();
   const filmId = Number(id);
 
-  const getFilm = (currentFilmId: number) => {
-    dispatch(fetchFilmAction(currentFilmId));
-  };
-
   useEffect(() => {
     if (currentFilm.id !== filmId) {
-      getFilm(filmId);
+      dispatch(fetchFilmAction(filmId));
     }
   });
 
   if (currentFilm.id !== filmId) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   const {
@@ -90,12 +88,10 @@ export default function Film(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth &&
+                  <MyListButton film={currentFilm} />
+                }
                 {
                   authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>
@@ -123,19 +119,7 @@ export default function Film(): JSX.Element {
           <SimilarFilms />
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

@@ -6,20 +6,38 @@ import {
   useDispatch,
   useSelector
 } from 'react-redux';
+import { useHistory } from 'react-router';
 import FilmList from '../../../film-list/film-list';
+import Footer from '../../../footer/footer';
 import GenreList from '../genre-list/genre-list';
+import Loading from '../../../loading/loading';
+import MyListButton from '../../../my-list-btn/my-list-btn';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
+import { getAuthorizationStatus } from '../../../../store/auth/selectors';
+import {
+  getFilmList,
+  getPromo
+} from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
-import type { MainPageProps } from './type';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../../../const';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-export default function Main({films}: MainPageProps): JSX.Element {
-  const dispatch = useDispatch();
+export default function Main(): JSX.Element {
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const promoFilm = useSelector(getPromo);
+  const films = useSelector(getFilmList);
   const filteredFilms = useSelector(getFilteredFilms);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
 
   useEffect(() => {
     if (filteredFilms.length === 0) {
@@ -33,9 +51,8 @@ export default function Main({films}: MainPageProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-  } = films[0];
+  } = promoFilm;
 
-  const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
   const shownFilms = filteredFilms.slice(0, showSize * FILM_CARD_AMOUNT);
 
   const handleShowMoreClick = () => {
@@ -77,18 +94,18 @@ export default function Main({films}: MainPageProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button"
+                  onClick={() => history.push(AppRoute.Player.replace(':id', `${promoFilm.id}`))}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth &&
+                  <MyListButton film={promoFilm} />
+                }
               </div>
             </div>
           </div>
@@ -102,28 +119,16 @@ export default function Main({films}: MainPageProps): JSX.Element {
             films={films}
             resetShowSize={() => setShowSize(DEFAULT_SHOW_SIZE)}
           />
-
-          <FilmList films={shownFilms}/>
-
+          {
+            filteredFilms.length !== 0 ? <FilmList films={shownFilms} /> : <Loading />
+          }
           {
             filteredFilms.length > shownFilms.length &&
-            <ShowMore onClick={handleShowMoreClick}/>
+            <ShowMore onClick={handleShowMoreClick} />
           }
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="/" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

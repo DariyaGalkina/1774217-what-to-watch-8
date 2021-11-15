@@ -6,7 +6,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import App from './components/app/app';
 import {
   checkAuthAction,
-  fetchFilmsAction
+  fetchFilmsAction,
+  fetchPromoAction
 } from './store/api-actions';
 import { redirect } from './store/middleware/redirect';
 import { rootReducer } from './store/root-reducer';
@@ -31,6 +32,7 @@ const store = configureStore({
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
+store.dispatch(fetchPromoAction());
 
 ReactDOM.render(
   <React.StrictMode>

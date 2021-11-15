@@ -1,11 +1,23 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import FilmList from '../../film-list/film-list';
+import Footer from '../../footer/footer';
 import UserBlock from '../../user-block/user-block';
+import { getFavoriteFilms } from '../../../store/auth/selectors';
+import { fetchFavoriteFilms } from '../../../store/api-actions';
 import { AppRoute } from '../../../const';
-import type { MyListProps } from './type';
 
-export default function MyList({films}: MyListProps): JSX.Element {
-  const favoriteFilms = films.filter((film) => film.isFavorite);
+export default function MyList(): JSX.Element {
+  const favoriteFilms = useSelector(getFavoriteFilms);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilms());
+  }, [dispatch]);
 
   return (
     <div className="user-page">
@@ -26,24 +38,10 @@ export default function MyList({films}: MyListProps): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <div className="catalog__films-list">
-          <FilmList films={favoriteFilms} />
-        </div>
+        <FilmList films={favoriteFilms} />
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
