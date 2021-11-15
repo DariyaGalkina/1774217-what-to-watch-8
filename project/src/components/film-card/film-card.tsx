@@ -2,6 +2,7 @@ import {
   memo,
   useState
 } from 'react';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { AppRoute } from '../../const';
@@ -9,6 +10,9 @@ import type { FilmCardProps } from './type';
 
 function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
   const [isPlayed, setIsPlayed] = useState(false);
+  const history = useHistory();
+
+  const filmRoute = AppRoute.Film.replace(':id', `${id}/#Overview`);
 
   return (
     <article
@@ -16,7 +20,10 @@ function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX
       onMouseEnter={() => setIsPlayed(true)}
       onMouseLeave={() => setIsPlayed(false)}
     >
-      <div className="small-film-card__image">
+      <div
+        className="small-film-card__image"
+        onClick={() => history.push(filmRoute)}
+      >
         <FilmCardPlayer
           src={previewVideoLink}
           poster={preview}
@@ -24,7 +31,12 @@ function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>{filmName}</Link>
+        <Link
+          className="small-film-card__link"
+          to={filmRoute}
+        >
+          {filmName}
+        </Link>
       </h3>
     </article>
   );
