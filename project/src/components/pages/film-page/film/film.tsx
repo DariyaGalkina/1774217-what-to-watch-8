@@ -10,9 +10,9 @@ import {
 import { Link } from 'react-router-dom';
 import FilmTabs from '../film-tabs/film-tabs';
 import Footer from '../../../footer/footer';
-import Loading from '../../../loading/loading';
 import MyListButton from '../../../my-list-btn/my-list-btn';
 import SimilarFilms from '../similar-films/similar-films';
+import Spinner from '../../../spinner/spinner';
 import UserBlock from '../../../user-block/user-block';
 import { fetchFilmAction } from '../../../../store/api-actions';
 import { getAuthorizationStatus } from '../../../../store/auth/selectors';
@@ -38,7 +38,7 @@ export default function Film(): JSX.Element {
   });
 
   if (currentFilm.id !== filmId) {
-    return <Loading />;
+    return <Spinner />;
   }
 
   const {

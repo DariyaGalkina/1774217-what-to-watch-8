@@ -10,26 +10,31 @@ import { useHistory } from 'react-router';
 import FilmList from '../../../film-list/film-list';
 import Footer from '../../../footer/footer';
 import GenreList from '../genre-list/genre-list';
+import Loading from '../../../loading/loading';
 import MyListButton from '../../../my-list-btn/my-list-btn';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
 import { getAuthorizationStatus } from '../../../../store/auth/selectors';
-import { getPromo } from '../../../../store/film-list/selectors';
+import {
+  getFilmList,
+  getPromo
+} from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
 import {
   AppRoute,
   AuthorizationStatus
 } from '../../../../const';
-import type { MainPageProps } from './type';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
-export default function Main({films}: MainPageProps): JSX.Element {
+export default function Main(): JSX.Element {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const promoFilm = useSelector(getPromo);
+  const films = useSelector(getFilmList);
   const filteredFilms = useSelector(getFilteredFilms);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [showSize, setShowSize] = useState(DEFAULT_SHOW_SIZE);
@@ -114,12 +119,12 @@ export default function Main({films}: MainPageProps): JSX.Element {
             films={films}
             resetShowSize={() => setShowSize(DEFAULT_SHOW_SIZE)}
           />
-
-          <FilmList films={shownFilms}/>
-
+          {
+            filteredFilms.length !== 0 ? <FilmList films={shownFilms} /> : <Loading />
+          }
           {
             filteredFilms.length > shownFilms.length &&
-            <ShowMore onClick={handleShowMoreClick}/>
+            <ShowMore onClick={handleShowMoreClick} />
           }
         </section>
 
