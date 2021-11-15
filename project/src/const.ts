@@ -48,3 +48,8 @@ export enum FavoriteAction {
   Add = 1,
   Remove = 0,
 }
+
+export enum Time {
+  Zero = 0,
+  HourInSecond = 3600,
+}

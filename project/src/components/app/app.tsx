@@ -10,7 +10,7 @@ import Loading from '../loading/loading';
 import Main from '../pages/main-page/main/main';
 import MyList from '../pages/my-list-page/my-list';
 import NotFound from '../not-found/not-found';
-import Player from '../pages/player-page/player';
+import Player from '../pages/player-page/player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../pages/sign-in-page/sign-in';
 import { browserHistory } from '../../browser-history';

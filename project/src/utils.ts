@@ -1,11 +1,15 @@
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import {
   Genres,
-  Grade
+  Grade,
+  Time
 } from './const';
 import type {
   FilmFromServer,
   FilmProps
 } from './types/film';
+dayjs.extend(duration);
 
 export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps[] => {
   if (genre === Genres.All) {
@@ -55,3 +59,14 @@ export const getGrade = (rating: number): string => {
   }
   return '';
 };
+
+export const formatDate = (date: string): string => dayjs(date).format('YYYY-MM-DD');
+export const formatRunTime = (runtime: number): string => dayjs.duration(runtime, 'minutes').format('H[h] mm[m]');
+
+export const formatRemainingTime = (remainingTime: number): string => {
+  const format = remainingTime >= Time.HourInSecond ? '-HH:mm:ss' : '-mm:ss';
+
+  return dayjs.duration(remainingTime, 'seconds').format(format);
+};
+
+export const humanizeDate = (date: string): string => dayjs(date).format('MMMM D, YYYY');

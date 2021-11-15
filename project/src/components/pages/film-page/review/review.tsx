@@ -1,3 +1,4 @@
+import { formatDate, humanizeDate } from '../../../../utils';
 import type { ReviewProps } from '../../../../types/review';
 
 export default function Review({reviews}: {reviews: ReviewProps[]}): JSX.Element {
@@ -10,7 +11,12 @@ export default function Review({reviews}: {reviews: ReviewProps[]}): JSX.Element
 
             <footer className="review__details">
               <cite className="review__author">{review.user.name}</cite>
-              <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
+              <time
+                className="review__date"
+                dateTime={formatDate(review.date)}
+              >
+                {humanizeDate(review.date)}
+              </time>
             </footer>
           </blockquote>
 
