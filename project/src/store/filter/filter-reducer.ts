@@ -4,11 +4,11 @@ import {
   changeGenre,
   filterFilms
 } from '../action';
-import { Genres } from '../../const';
+import { Genre } from '../../const';
 import type { FilterState } from '../../types/state';
 
 const initialState: FilterState = {
-  currentGenre: Genres.All,
+  currentGenre: Genre.All,
   filteredFilms: [],
 };
 

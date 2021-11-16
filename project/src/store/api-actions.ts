@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import {
   addFavorite,
+  loadAvatar,
   loadFavorite,
   loadFilm,
   loadFilms,
@@ -16,8 +17,7 @@ import {
 } from './action';
 import {
   dropToken,
-  saveToken,
-  Token
+  saveToken
 } from '../services/token';
 import {
   APIRoute,
@@ -26,7 +26,10 @@ import {
   FavoriteAction,
   ToastMessage
 } from '../const';
-import type { AuthData } from '../types/auth-data';
+import type {
+  AuthData,
+  AuthInfo
+} from '../types/auth-data';
 import type { FilmFromServer } from '../types/film';
 import type {
   ReviewPost,
@@ -72,7 +75,8 @@ export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      await api.get(APIRoute.Login);
+      const {data} = await api.get(APIRoute.Login);
+      dispatch(loadAvatar(data.avatar_url));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
       toast.info(ToastMessage.Auth);
@@ -82,8 +86,9 @@ export const checkAuthAction = (): ThunkActionResult =>
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data: {token}} = await api.post<{token: Token}>(APIRoute.Login, {email, password});
-      saveToken(token);
+      const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(loadAvatar(data.avatar_url));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
       dispatch(redirectToRoute(AppRoute.Main));
     } catch {
@@ -117,17 +122,22 @@ export const fetchFavoriteFilms = (): ThunkActionResult =>
 
 export const setFavoriteAction = (filmId: number, action: FavoriteAction): ThunkActionResult =>
   async (dispatch, getState, api): Promise<void> => {
-    const {data} = await api.post<FilmFromServer>(`${APIRoute.Favorite}/${filmId}/${action}`);
+    try {
+      const {data} = await api.post<FilmFromServer>(`${APIRoute.Favorite}/${filmId}/${action}`);
 
-    dispatch(updateFilm(data));
+      dispatch(updateFilm(data));
 
-    if (getState().films.promo.id === filmId) {
-      dispatch(updatePromo(data));
-    }
-    if (action === FavoriteAction.Add) {
-      dispatch(addFavorite());
-    }
-    if (action === FavoriteAction.Remove) {
-      dispatch(removeFavorite());
+      if (getState().films.promo.id === filmId) {
+        dispatch(updatePromo(data));
+      }
+      if (action === FavoriteAction.Add) {
+        dispatch(addFavorite());
+      }
+      if (action === FavoriteAction.Remove) {
+        dispatch(removeFavorite());
+      }
+    } catch {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+      toast.info(ToastMessage.Auth);
     }
   };

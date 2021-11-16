@@ -3,22 +3,30 @@ import {
   useEffect,
   useState
 } from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import {
+  useDispatch,
+  useSelector
+} from 'react-redux';
 import { setFavoriteAction } from '../../store/api-actions';
-import { FavoriteAction } from '../../const';
+import {
+  AuthorizationStatus,
+  FavoriteAction
+} from '../../const';
 import type { FilmProps } from '../../types/film';
+import { getAuthorizationStatus } from '../../store/auth/selectors';
 
 function MyListButton({film}: {film: FilmProps}): JSX.Element {
   const [isInFavoriteList, setIsInFavoriteList] = useState(film.isFavorite);
-  const history = useHistory();
+  const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
 
-  useEffect(() => setIsInFavoriteList(film.isFavorite), [film, history]);
+  useEffect(() => setIsInFavoriteList(film.isFavorite), [film]);
 
   const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      setIsInFavoriteList(!isInFavoriteList);
+    }
     dispatch(setFavoriteAction(film.id, isInFavoriteList ? FavoriteAction.Remove : FavoriteAction.Add));
-    setIsInFavoriteList(!isInFavoriteList);
   };
 
   return (

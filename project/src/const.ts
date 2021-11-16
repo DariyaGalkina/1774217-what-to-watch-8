@@ -25,7 +25,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Genres {
+export enum Genre {
   All = 'All genres',
 }
 
@@ -52,4 +52,8 @@ export enum FavoriteAction {
 export enum Time {
   Zero = 0,
   HourInSecond = 3600,
+}
+
+export enum Avatar {
+  Default = 'img/avatar.jpg',
 }

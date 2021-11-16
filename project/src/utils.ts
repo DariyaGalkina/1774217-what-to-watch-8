@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {
-  Genres,
+  Genre,
   Grade,
   Time
 } from './const';
@@ -12,7 +12,7 @@ import type {
 dayjs.extend(duration);
 
 export const filterFilmsByGenre = (films: FilmProps[], genre: string): FilmProps[] => {
-  if (genre === Genres.All) {
+  if (genre === Genre.All) {
     return films;
   }
 

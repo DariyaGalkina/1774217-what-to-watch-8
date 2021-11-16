@@ -7,7 +7,7 @@ import {
   filterFilms
 } from '../../../../store/action';
 import { getCurrentGenre } from '../../../../store/filter/selectors';
-import { Genres } from '../../../../const';
+import { Genre } from '../../../../const';
 import type { FilmProps } from '../../../../types/film';
 import type { GenreListProps } from './type';
 
@@ -24,7 +24,7 @@ export default function GenreList({films, resetShowSize}: GenreListProps): JSX.E
   };
 
   const genres = [
-    Genres.All,
+    Genre.All,
     ...new Set(films.map((film) => film.genre)),
   ];
 
