@@ -8,26 +8,40 @@ import { loginAction } from '../../../store/api-actions';
 import Footer from '../../footer/footer';
 import { AppRoute } from '../../../const';
 import type { AuthData } from '../../../types/auth-data';
+import type { ThunkAppDispatch } from '../../../types/action';
 
 const DEFAULT_FORM_STATE: AuthData = {
   email: '',
   password: '',
 };
 
+const passwordRegEx = /(?=.*\d)(?![.\n])(?=.*[A-Za-z])/;
+
 export default function SignIn(): JSX.Element {
   const [userInput, setUserInput] = useState(DEFAULT_FORM_STATE);
-  const dispatch = useDispatch();
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  const dispatch = useDispatch<ThunkAppDispatch>();
 
   const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
+    dispatch(loginAction(authData))
+      .catch(() => setIsEmailValid(false));
   };
+
+  const checkPassword = () => passwordRegEx.test(userInput.password);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsEmailValid(true);
 
-    if (userInput.email !== '' && userInput.password !== '') {
-      onSubmit(userInput);
+    if (!checkPassword()) {
+      setIsPasswordValid(false);
+      return;
     }
+    setIsPasswordValid(true);
+
+    onSubmit(userInput);
   };
 
   return (
@@ -50,8 +64,20 @@ export default function SignIn(): JSX.Element {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
+          {
+            !isEmailValid &&
+            <div className="sign-in__message">
+              <p>Please enter a valid email address</p>
+            </div>
+          }
+          {
+            !isPasswordValid &&
+            <div className="sign-in__message">
+              <p>We can’t recognize this email <br /> and password combination. Please try again.</p>
+            </div>
+          }
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={`sign-in__field ${!isEmailValid && 'sign-in__field--error'}`}>
               <input
                 className="sign-in__input"
                 type="email"

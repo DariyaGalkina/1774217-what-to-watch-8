@@ -39,14 +39,22 @@ import type { ThunkActionResult } from '../types/action';
 
 export const fetchPromoAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmFromServer>(APIRoute.Promo);
-    dispatch(loadPromo(data));
+    try {
+      const {data} = await api.get<FilmFromServer>(APIRoute.Promo);
+      dispatch(loadPromo(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const fetchFilmsAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmFromServer[]>(APIRoute.Films);
-    dispatch(loadFilms(data));
+    try {
+      const {data} = await api.get<FilmFromServer[]>(APIRoute.Films);
+      dispatch(loadFilms(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const fetchFilmAction = (filmId: number): ThunkActionResult =>
@@ -62,14 +70,22 @@ export const fetchFilmAction = (filmId: number): ThunkActionResult =>
 
 export const fetchSimilarFilmsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<FilmFromServer[]>(APIRoute.Similar.replace(':id', `${filmId}`));
-    dispatch(loadSimilarFilms(data));
+    try {
+      const {data} = await api.get<FilmFromServer[]>(APIRoute.Similar.replace(':id', `${filmId}`));
+      dispatch(loadSimilarFilms(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<ReviewProps[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
-    dispatch(loadReviews(data));
+    try {
+      const {data} = await api.get<ReviewProps[]>(APIRoute.Reviews.replace(':id', `${filmId}`));
+      dispatch(loadReviews(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
@@ -85,15 +101,12 @@ export const checkAuthAction = (): ThunkActionResult =>
 
 export const loginAction = ({email, password}: AuthData): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    try {
-      const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
-      saveToken(data.token);
-      dispatch(loadAvatar(data.avatar_url));
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(redirectToRoute(AppRoute.Main));
-    } catch {
-      toast.error(ToastMessage.Login);
-    }
+    const {data} = await api.post<AuthInfo>(APIRoute.Login, {email, password});
+
+    saveToken(data.token);
+    dispatch(loadAvatar(data.avatar_url));
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
   };
 
 export const logoutAction = (): ThunkActionResult =>
@@ -116,8 +129,12 @@ export const sendReviewAction = (filmId: number, review: ReviewPost ): ThunkActi
 
 export const fetchFavoriteFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void>  => {
-    const {data} = await api.get<FilmFromServer[]>(APIRoute.Favorite);
-    dispatch(loadFavorite(data));
+    try {
+      const {data} = await api.get<FilmFromServer[]>(APIRoute.Favorite);
+      dispatch(loadFavorite(data));
+    } catch {
+      toast.error(ToastMessage.Data);
+    }
   };
 
 export const setFavoriteAction = (filmId: number, action: FavoriteAction): ThunkActionResult =>
