@@ -12,7 +12,7 @@ import {
 import { AuthState } from '../../types/state';
 import { adaptFilmsToClient } from '../../utils';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   avatar: Avatar.Default,
   favoriteFilms: [],
