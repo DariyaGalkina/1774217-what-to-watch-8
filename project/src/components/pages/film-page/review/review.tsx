@@ -1,4 +1,7 @@
-import { formatDate, humanizeDate } from '../../../../utils';
+import {
+  formatDate,
+  humanizeDate
+} from '../../../../utils';
 import type { ReviewProps } from '../../../../types/review';
 
 export default function Review({reviews}: {reviews: ReviewProps[]}): JSX.Element {
