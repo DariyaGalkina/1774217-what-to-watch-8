@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import FilmTabOverview from '../film-tab-overview/film-tab-overview';
 import FilmTabDetails from '../film-tab-details/film-tab-details';
 import FilmTabReviews from '../film-tab-reviews/film-tab-reviews';
+import type { FilmProps } from '../../../../types/film';
 import type { FilmTabsProps } from './type';
 
 const FilmTab = {
@@ -10,19 +11,19 @@ const FilmTab = {
   REVIEWS: 'Reviews',
 };
 
+const renderActiveTab = (tab: string, film: FilmProps) => {
+  switch (tab) {
+    case FilmTab.OVERVIEW:
+      return <FilmTabOverview film={film} />;
+    case FilmTab.DETAILS:
+      return <FilmTabDetails film={film} />;
+    case FilmTab.REVIEWS:
+      return <FilmTabReviews />;
+  }
+};
+
 export default function FilmTabs({id, film}: FilmTabsProps) : JSX.Element {
   const urlHash = document.location.hash.replace('#', '');
-
-  const renderActiveTab = (tab: string) => {
-    switch (tab) {
-      case FilmTab.OVERVIEW:
-        return <FilmTabOverview film={film} />;
-      case FilmTab.DETAILS:
-        return <FilmTabDetails film={film} />;
-      case FilmTab.REVIEWS:
-        return <FilmTabReviews />;
-    }
-  };
 
   const setClassName = (thisTab: string) => (
     `film-nav__item ${urlHash === thisTab ? 'film-nav__item--active' : ''}`
@@ -55,7 +56,7 @@ export default function FilmTabs({id, film}: FilmTabsProps) : JSX.Element {
           </li>
         </ul>
       </nav>
-      {renderActiveTab(urlHash)}
+      {renderActiveTab(urlHash, film)}
     </div>
   );
 }

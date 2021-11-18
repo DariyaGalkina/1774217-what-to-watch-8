@@ -3,8 +3,10 @@ import {
   useRef,
   useState
 } from 'react';
-import { useHistory, useParams } from 'react-router';
-// import { Link } from 'react-router-dom';
+import {
+  useHistory,
+  useParams
+} from 'react-router';
 import {
   useDispatch,
   useSelector
@@ -13,10 +15,7 @@ import PauseIcon from '../pause-icon/pause-icon';
 import PlayIcon from '../play-icon/play-icon';
 import { getCurrentFilm } from '../../../../store/current-film/selectors';
 import { fetchFilmAction } from '../../../../store/api-actions';
-import {
-  // AppRoute,
-  Time
-} from '../../../../const';
+import { Time } from '../../../../const';
 import ControlsRow from '../controls-row/controls-row';
 
 export default function Player(): JSX.Element {

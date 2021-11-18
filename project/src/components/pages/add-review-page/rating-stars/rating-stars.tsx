@@ -2,7 +2,7 @@ import {
   Fragment,
   memo
 } from 'react';
-import { RatingStarsProps } from './type';
+import type { RatingStarsProps } from './type';
 
 const MAX_RATING = 10;
 

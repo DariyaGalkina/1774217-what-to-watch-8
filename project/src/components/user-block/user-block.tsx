@@ -19,7 +19,7 @@ function UserBlock(): JSX.Element {
   const avatar = useSelector(getAvatar);
   const dispatch = useDispatch();
 
-  const setLogout = () => {
+  const handleLogoutClick = () => {
     dispatch(logoutAction());
   };
 
@@ -37,7 +37,13 @@ function UserBlock(): JSX.Element {
                 </div>
               </li>
               <li className="user-block__item">
-                <Link onClick={setLogout} className="user-block__link" to={AppRoute.Main}>Sign Out</Link>
+                <Link
+                  className="user-block__link"
+                  to={AppRoute.Main}
+                  onClick={handleLogoutClick}
+                >
+                  Sign Out
+                </Link>
               </li>
             </>
           ) : (

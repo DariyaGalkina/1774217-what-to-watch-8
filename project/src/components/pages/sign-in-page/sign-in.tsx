@@ -16,6 +16,7 @@ const DEFAULT_FORM_STATE: AuthData = {
 };
 
 const passwordRegEx = /(?=.*\d)(?![.\n])(?=.*[A-Za-z])/;
+const checkPassword = (password: string) => passwordRegEx.test(password);
 
 export default function SignIn(): JSX.Element {
   const [userInput, setUserInput] = useState(DEFAULT_FORM_STATE);
@@ -29,13 +30,11 @@ export default function SignIn(): JSX.Element {
       .catch(() => setIsEmailValid(false));
   };
 
-  const checkPassword = () => passwordRegEx.test(userInput.password);
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setIsEmailValid(true);
 
-    if (!checkPassword()) {
+    if (!checkPassword(userInput.password)) {
       setIsPasswordValid(false);
       return;
     }

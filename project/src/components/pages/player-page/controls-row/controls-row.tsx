@@ -1,16 +1,12 @@
 import { memo } from 'react';
 import { Time } from '../../../../const';
 import { formatRemainingTime } from '../../../../utils';
+import type { ProgressBarProps } from './type';
 
-type ProgressBarProps = {
-  duration: number,
-  currentTime: number,
-}
+const getTImePercent = ({duration, currentTime}: ProgressBarProps): number =>
+  duration ? (100 / duration * currentTime) : Time.Zero;
 
 function ControlsRow({duration, currentTime}: ProgressBarProps): JSX.Element {
-  const getTImePercent = (): number =>
-    duration ? (100 / duration * currentTime) : Time.Zero;
-
   return (
     <div className="player__controls-row">
       <div className="player__time">
@@ -19,7 +15,7 @@ function ControlsRow({duration, currentTime}: ProgressBarProps): JSX.Element {
           value={currentTime}
           max={duration}
         />
-        <div className="player__toggler" style={{left: `${getTImePercent()}%`}}>Toggler</div>
+        <div className="player__toggler" style={{left: `${getTImePercent({duration, currentTime})}%`}}>Toggler</div>
       </div>
       <div className="player__time-value">
         {formatRemainingTime(duration - currentTime)}
