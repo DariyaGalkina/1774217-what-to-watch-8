@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify';
 import {
-  addFavorite,
   loadAvatar,
   loadFavorite,
   loadFilm,
@@ -9,7 +8,6 @@ import {
   loadReviews,
   loadSimilarFilms,
   redirectToRoute,
-  removeFavorite,
   requireAuthorization,
   requireLogout,
   updateFilm,
@@ -91,7 +89,7 @@ export const fetchReviewsAction = (filmId: number): ThunkActionResult =>
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.get(APIRoute.Login);
+      const {data} = await api.get<AuthInfo>(APIRoute.Login);
       dispatch(loadAvatar(data.avatar_url));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {
@@ -146,12 +144,6 @@ export const setFavoriteAction = (filmId: number, action: FavoriteAction): Thunk
 
       if (getState().films.promo.id === filmId) {
         dispatch(updatePromo(data));
-      }
-      if (action === FavoriteAction.Add) {
-        dispatch(addFavorite());
-      }
-      if (action === FavoriteAction.Remove) {
-        dispatch(removeFavorite());
       }
     } catch {
       dispatch(redirectToRoute(AppRoute.SignIn));

@@ -18,8 +18,6 @@ export enum ActionType {
   LoadFavorite = 'user/loadFavorite',
   UpdatePromo = 'user/updatePromo',
   UpdateFilm = 'user/updateFilm',
-  AddFavorite = 'user/addFavorite',
-  RemoveFavorite = 'user/removeFavorite',
   RequireAuthorization = 'user/requireAuthorization',
   RequireLogout = 'user/requireLogout',
   RedirectToRoute = 'app/redirect',
