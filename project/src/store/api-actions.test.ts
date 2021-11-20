@@ -40,8 +40,8 @@ import {
   makeFakeFilmListFromServer
 } from '../mocks/film-data';
 import {
-  makeFakeReview,
-  makeFakeReviewList
+  makeFakeReviewList,
+  makeFakeReviewPost
 } from '../mocks/review-data';
 import {
   APIRoute,
@@ -60,7 +60,7 @@ const fakeUser = makeFakeUserData();
 const fakeFilm = makeFakeFilm();
 const fakeServerFilm = makeFakeFilmFromServer();
 const fakeServerFilms = makeFakeFilmListFromServer(FILM_COUNT);
-const fakeReview = makeFakeReview();
+const fakeReview = makeFakeReviewPost();
 const fakeReviews = makeFakeReviewList(REVIEW_COUNT);
 
 describe('Async actions', () => {
