@@ -6,7 +6,10 @@ import {
 } from '../action';
 import { makeFakeAuthData } from '../../mocks/auth-data';
 import { makeFakeFilmListFromServer } from '../../mocks/film-data';
-import { authReducer, initialState } from './auth-reducer';
+import {
+  authReducer,
+  initialState
+} from './auth-reducer';
 import { adaptFilmsToClient } from '../../utils';
 import { AuthorizationStatus } from '../../const';
 

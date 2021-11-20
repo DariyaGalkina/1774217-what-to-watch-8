@@ -1,5 +1,4 @@
 import {
-  Router as BrowserRouter,
   Switch,
   Route
 } from 'react-router-dom';
@@ -13,7 +12,6 @@ import Player from '../pages/player-page/player/player';
 import PrivateRoute from '../private-route/private-route';
 import SignIn from '../pages/sign-in-page/sign-in';
 import Spinner from '../spinner/spinner';
-import { browserHistory } from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/auth/selectors';
 import {
   getIsDataLoaded,
@@ -34,30 +32,28 @@ export default function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route path={AppRoute.Main} exact>
-          <Main />
-        </Route>
-        <Route path={AppRoute.SignIn} exact>
-          <SignIn />
-        </Route>
-        <PrivateRoute exact path={AppRoute.MyList}>
-          <MyList />
-        </PrivateRoute>
-        <Route path={AppRoute.Film} exact>
-          <Film />
-        </Route>
-        <PrivateRoute exact path={AppRoute.AddReview}>
-          <AddReview />
-        </PrivateRoute>
-        <Route path={AppRoute.Player} exact>
-          <Player />
-        </Route>
-        <Route>
-          <NotFound />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route path={AppRoute.Main} exact>
+        <Main />
+      </Route>
+      <Route path={AppRoute.SignIn} exact>
+        <SignIn />
+      </Route>
+      <PrivateRoute path={AppRoute.MyList} exact>
+        <MyList />
+      </PrivateRoute>
+      <Route path={AppRoute.Film} exact>
+        <Film />
+      </Route>
+      <PrivateRoute path={AppRoute.AddReview} exact>
+        <AddReview />
+      </PrivateRoute>
+      <Route path={AppRoute.Player} exact>
+        <Player />
+      </Route>
+      <Route>
+        <NotFound />
+      </Route>
+    </Switch>
   );
 }
