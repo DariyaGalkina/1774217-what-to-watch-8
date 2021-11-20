@@ -88,10 +88,8 @@ export default function Film(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                {
-                  authorizationStatus === AuthorizationStatus.Auth &&
-                  <MyListButton film={currentFilm} />
-                }
+
+                <MyListButton film={currentFilm} />
                 {
                   authorizationStatus === AuthorizationStatus.Auth &&
                   <Link className="btn film-card__button" to={AppRoute.AddReview.replace(':id', `${filmId}`)}>Add review</Link>

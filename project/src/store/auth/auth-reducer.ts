@@ -1,15 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
+  loadAvatar,
   loadFavorite,
   requireAuthorization,
   requireLogout
 } from '../action';
-import { AuthorizationStatus } from '../../const';
+import {
+  AuthorizationStatus,
+  Avatar
+} from '../../const';
 import { AuthState } from '../../types/state';
 import { adaptFilmsToClient } from '../../utils';
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   authorizationStatus: AuthorizationStatus.Unknown,
+  avatar: Avatar.Default,
   favoriteFilms: [],
 };
 
@@ -24,5 +29,8 @@ export const authReducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavorite, (state, action) => {
       state.favoriteFilms = adaptFilmsToClient(action.payload);
+    })
+    .addCase(loadAvatar, (state, action) => {
+      state.avatar = action.payload;
     });
 });

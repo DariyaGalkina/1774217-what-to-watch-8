@@ -12,7 +12,6 @@ import {
 import RatingStars from '../rating-stars/rating-stars';
 import { sendReviewAction } from '../../../../store/api-actions';
 import { getCurrentFilm } from '../../../../store/current-film/selectors';
-import type { ThunkAppDispatch } from '../../../../types/action';
 import type { ReviewPost } from '../../../../types/review';
 
 const DEFAULT_RATING = 0;
@@ -26,7 +25,7 @@ export default function AddReviewForm(): JSX.Element {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const currentFilm = useSelector(getCurrentFilm);
-  const dispatch = useDispatch<ThunkAppDispatch>();
+  const dispatch = useDispatch();
 
   const sendReview = (id: number, data: ReviewPost) => dispatch(sendReviewAction(id, data));
 
@@ -51,8 +50,7 @@ export default function AddReviewForm(): JSX.Element {
     };
 
     setIsFormSending(true);
-    sendReview(currentFilm.id, postData)
-      .then(() => setIsFormSending(false));
+    sendReview(currentFilm.id, postData);
   };
 
   return (

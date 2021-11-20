@@ -11,7 +11,7 @@ import {
 import type { FilmListState } from '../../types/state';
 import type { FilmProps } from '../../types/film';
 
-const initialState: FilmListState = {
+export const initialState: FilmListState = {
   promo: {} as FilmProps,
   filmList: [],
   isDataLoaded: false,

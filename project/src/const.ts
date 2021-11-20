@@ -25,15 +25,15 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export enum Genres {
+export enum Genre {
   All = 'All genres',
 }
 
 export enum ToastMessage {
-  Film = 'There\'s no such film',
   Auth = 'You aren\'t authorized',
-  Login = 'Signing in failed',
-  Review = 'Sending failed',
+  Data = 'Failed to get data',
+  Film = 'There\'s no such film',
+  Review = 'Failed to send review',
 }
 
 export enum Grade {
@@ -52,4 +52,8 @@ export enum FavoriteAction {
 export enum Time {
   Zero = 0,
   HourInSecond = 3600,
+}
+
+export enum Avatar {
+  Default = 'img/avatar.jpg',
 }

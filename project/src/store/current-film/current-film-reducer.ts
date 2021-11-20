@@ -10,9 +10,9 @@ import {
   adaptToClient
 } from '../../utils';
 import type { FilmProps } from '../../types/film';
-import { CurrentFilmState } from '../../types/state';
+import type { CurrentFilmState } from '../../types/state';
 
-const initialState: CurrentFilmState = {
+export const initialState: CurrentFilmState = {
   currentFilm: {} as FilmProps,
   similarFilms: [],
   reviews: [],

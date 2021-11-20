@@ -3,8 +3,10 @@ import {
   useRef,
   useState
 } from 'react';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import {
+  useHistory,
+  useParams
+} from 'react-router';
 import {
   useDispatch,
   useSelector
@@ -13,15 +15,13 @@ import PauseIcon from '../pause-icon/pause-icon';
 import PlayIcon from '../play-icon/play-icon';
 import { getCurrentFilm } from '../../../../store/current-film/selectors';
 import { fetchFilmAction } from '../../../../store/api-actions';
-import {
-  AppRoute,
-  Time
-} from '../../../../const';
+import { Time } from '../../../../const';
 import ControlsRow from '../controls-row/controls-row';
 
 export default function Player(): JSX.Element {
   const currentFilm = useSelector(getCurrentFilm);
   const dispatch = useDispatch();
+  const history = useHistory();
   const {id}: {id: string} = useParams();
   const filmId = Number(id);
 
@@ -55,10 +55,16 @@ export default function Player(): JSX.Element {
         onTimeUpdate={(evt) => setCurrentTime(Math.round(evt.currentTarget.currentTime))}
         onDurationChange={(evt) => setDuration(Math.round(evt.currentTarget.duration))}
       />
-
-      <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>
+      <button
+        type="button"
+        className="player__exit"
+        onClick={() => history.goBack()}
+      >
+        Exit
+      </button>
+      {/* <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>
         <button type="button" className="player__exit">Exit</button>
-      </Link>
+      </Link> */}
 
       <div className="player__controls">
 

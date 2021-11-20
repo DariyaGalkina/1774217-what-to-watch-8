@@ -17,6 +17,11 @@ export const filterFilms = createAction(
   (films: FilmProps[]) => ({payload: films}),
 );
 
+export const loadAvatar = createAction(
+  ActionType.LoadAvatar,
+  (url: string) => ({payload: url}),
+);
+
 export const loadPromo = createAction(
   ActionType.LoadPromo,
   (promo: FilmFromServer) => ({payload: promo}),
@@ -63,10 +68,6 @@ export const requireAuthorization = createAction(
 );
 
 export const requireLogout = createAction(ActionType.RequireLogout);
-
-export const addFavorite = createAction(ActionType.AddFavorite);
-
-export const removeFavorite = createAction(ActionType.RemoveFavorite);
 
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,

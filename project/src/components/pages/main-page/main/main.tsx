@@ -15,22 +15,17 @@ import MyListButton from '../../../my-list-btn/my-list-btn';
 import ShowMore from '../show-more/show-more';
 import UserBlock from '../../../user-block/user-block';
 import { filterFilms } from '../../../../store/action';
-import { getAuthorizationStatus } from '../../../../store/auth/selectors';
 import {
   getFilmList,
   getPromo
 } from '../../../../store/film-list/selectors';
 import { getFilteredFilms } from '../../../../store/filter/selectors';
-import {
-  AppRoute,
-  AuthorizationStatus
-} from '../../../../const';
+import { AppRoute } from '../../../../const';
 
 const FILM_CARD_AMOUNT = 8;
 const DEFAULT_SHOW_SIZE = 1;
 
 export default function Main(): JSX.Element {
-  const authorizationStatus = useSelector(getAuthorizationStatus);
   const promoFilm = useSelector(getPromo);
   const films = useSelector(getFilmList);
   const filteredFilms = useSelector(getFilteredFilms);
@@ -102,10 +97,8 @@ export default function Main(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                {
-                  authorizationStatus === AuthorizationStatus.Auth &&
-                  <MyListButton film={promoFilm} />
-                }
+
+                <MyListButton film={promoFilm} />
               </div>
             </div>
           </div>
