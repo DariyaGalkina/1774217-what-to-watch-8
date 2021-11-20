@@ -3,22 +3,22 @@ import {
   screen
 } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { createMemoryHistory } from 'history';
+import { Action } from 'redux';
 import { Provider } from 'react-redux';
+import thunk, { ThunkDispatch } from 'redux-thunk';
 import { Router } from 'react-router-dom';
-import {
-  AppRoute,
-  AuthorizationStatus
-} from '../../const';
+import { createMemoryHistory } from 'history';
 import {
   makeFakeFilm,
   makeFakeFilmList
 } from '../../mocks/film-data';
 import App from './app';
-import { State } from '../../types/state';
-import { Action } from 'redux';
-import thunk, { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../../services/api';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../const';
+import type { State } from '../../types/state';
 
 const FILM_COUNT = 10;
 
@@ -30,8 +30,6 @@ const mockStore = configureMockStore<
   Action,
   ThunkDispatch<State, typeof api, Action>
 >(middlewares);
-
-// const mockStore = configureMockStore();
 
 const fakeFilm = makeFakeFilm();
 const fakeFilmList = makeFakeFilmList(FILM_COUNT);
@@ -88,15 +86,6 @@ describe('Application Routing', () => {
 
     expect(screen.getByText(/My list/i)).toBeInTheDocument();
   });
-
-  // it('should rederect to "SignIn" when unauthorized user navigate to /myList', () => {
-  //   history.push(AppRoute.SignIn);
-  //   render(fakeAppNoAuth);
-
-  // expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
-  // expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
-  // expect(screen.getByText(/© 2021 What to watch Ltd./i)).toBeInTheDocument();
-  // });
 
   it('should render "Film" when user navigate to "/films/:id"', () => {
     history.push(AppRoute.Film.replace(':id', fakeFilm.id.toString()));

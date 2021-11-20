@@ -83,6 +83,7 @@ export default function SignIn(): JSX.Element {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                data-testid="email"
                 onChange={(evt) => setUserInput({
                   ...userInput,
                   email: evt.currentTarget.value,
@@ -97,6 +98,7 @@ export default function SignIn(): JSX.Element {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                data-testid="password"
                 onChange={(evt) => setUserInput({
                   ...userInput,
                   password: evt.currentTarget.value,
