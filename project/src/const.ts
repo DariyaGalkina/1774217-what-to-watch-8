@@ -36,6 +36,14 @@ export enum ToastMessage {
   Review = 'Failed to send review',
 }
 
+export enum RatingGrade {
+  Bad = 0,
+  Normal = 3,
+  Good = 5,
+  VeryGood = 8,
+  Awesome = 10,
+}
+
 export enum Grade {
   Bad = 'Bad',
   Normal = 'Normal',

@@ -62,12 +62,8 @@ export default function Player(): JSX.Element {
       >
         Exit
       </button>
-      {/* <Link to={AppRoute.Film.replace(':id', `${id}/#Overview`)}>
-        <button type="button" className="player__exit">Exit</button>
-      </Link> */}
 
       <div className="player__controls">
-
         <ControlsRow
           duration={duration}
           currentTime={currentTime}
