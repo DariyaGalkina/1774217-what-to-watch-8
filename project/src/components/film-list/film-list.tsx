@@ -8,10 +8,7 @@ function FilmList({films}: FilmListProps): JSX.Element {
       {films.map((film) => (
         <FilmCard
           key={film.id}
-          id={film.id}
-          filmName={film.name}
-          preview={film.previewImage}
-          previewVideoLink={film.previewVideoLink}
+          film={film}
         />
       ))}
     </div>

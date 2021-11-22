@@ -1,6 +1,5 @@
+import type { FilmProps } from '../../types/film';
+
 export type FilmCardProps = {
-  id: number,
-  filmName: string,
-  preview: string,
-  previewVideoLink: string,
+  film: FilmProps,
 };

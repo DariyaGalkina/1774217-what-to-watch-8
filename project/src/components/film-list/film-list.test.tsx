@@ -1,7 +1,5 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import {
-  render
-} from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -20,7 +18,7 @@ const store = mockStore({
   },
 });
 
-describe('Component: NotFound', () => {
+describe('Component: FilmList', () => {
   it('should render correctly', () => {
     const { container } = render(
       <Provider store={store}>
