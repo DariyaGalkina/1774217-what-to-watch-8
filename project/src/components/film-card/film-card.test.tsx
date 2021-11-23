@@ -48,6 +48,7 @@ describe('Component: FilmCard', () => {
         </Route>,
       </Router>);
 
+    expect(screen.queryByText(/This is Fake Film page/i)).not.toBeInTheDocument();
     userEvent.click(screen.getByRole('article'));
     expect(screen.queryByText(/This is Fake Film page/i)).toBeInTheDocument();
   });
