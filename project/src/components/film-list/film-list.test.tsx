@@ -19,6 +19,10 @@ const store = mockStore({
 });
 
 describe('Component: FilmList', () => {
+  beforeAll(() => {
+    window.HTMLMediaElement.prototype.load = jest.fn();
+  });
+
   it('should render correctly', () => {
     const { container } = render(
       <Provider store={store}>

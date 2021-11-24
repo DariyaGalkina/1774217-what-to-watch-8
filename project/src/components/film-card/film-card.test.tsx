@@ -18,6 +18,10 @@ const mockStore = configureMockStore();
 const store = mockStore();
 
 describe('Component: FilmCard', () => {
+  beforeAll(() => {
+    window.HTMLMediaElement.prototype.load = jest.fn();
+  });
+
   it('should render correctly', () => {
     const { container } = render(
       <Provider store={store}>

@@ -6,10 +6,17 @@ import {
 import userEvent from '@testing-library/user-event';
 import * as Redux from 'react-redux';
 import { Provider } from 'react-redux';
-import { Route, Router, Switch } from 'react-router-dom';
+import {
+  Route,
+  Router,
+  Switch
+} from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import UserBlock from './user-block';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import {
+  AppRoute,
+  AuthorizationStatus
+} from '../../const';
 
 const mockStore = configureMockStore();
 const history = createMemoryHistory();

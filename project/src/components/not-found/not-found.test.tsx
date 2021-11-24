@@ -2,7 +2,11 @@ import {
   render,
   screen
 } from '@testing-library/react';
-import { Route, Router, Switch } from 'react-router-dom';
+import {
+  Route,
+  Router,
+  Switch
+} from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import NotFound from './not-found';
 import { AppRoute } from '../../const';
