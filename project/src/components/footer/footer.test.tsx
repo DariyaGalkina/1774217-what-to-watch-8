@@ -21,13 +21,13 @@ describe('Component: Footer', () => {
     expect(screen.getByRole('link')).toBeInTheDocument();
   });
 
-  it('should redirect to "Main" when user clicked to link', () => {
+  it('should redirect to "Main" when link clicked', () => {
     history.push('/fake');
     render(
       <Router history={history}>
         <Switch>
           <Route path={AppRoute.Main} exact>
-            <h1>This is main page</h1>
+            <h1>This is Main page</h1>
           </Route>
           <Route>
             <Footer />
@@ -35,8 +35,8 @@ describe('Component: Footer', () => {
         </Switch>
       </Router>);
 
-    expect(screen.queryByText(/This is main page/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/This is Main page/i)).not.toBeInTheDocument();
     userEvent.click(screen.getByRole('link'));
-    expect(screen.queryByText(/This is main page/i)).toBeInTheDocument();
+    expect(screen.queryByText(/This is Main page/i)).toBeInTheDocument();
   });
 });

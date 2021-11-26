@@ -10,7 +10,7 @@ import {
   fetchFilmsAction,
   fetchPromoAction
 } from './store/api-actions';
-import { browserHistory } from './browser-history';
+import browserHistory from './browser-history';
 import { redirect } from './store/middleware/redirect';
 import { rootReducer } from './store/root-reducer';
 import { requireAuthorization } from './store/action';

@@ -35,7 +35,12 @@ function MyListButton({film}: {film: FilmProps}): JSX.Element {
       type="button"
       onClick={handleFavoriteClick}
     >
-      <svg viewBox="0 0 19 20" width="19" height="20">
+      <svg
+        viewBox="0 0 19 20"
+        width="19"
+        height="20"
+        data-testid={isInFavoriteList ? 'in-list' : 'add'}
+      >
         <use xlinkHref={isInFavoriteList ? '#in-list' : '#add'}></use>
       </svg>
       <span>My list</span>

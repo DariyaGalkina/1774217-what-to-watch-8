@@ -3,6 +3,7 @@ import duration from 'dayjs/plugin/duration';
 import {
   Genre,
   Grade,
+  RatingGrade,
   Time
 } from './const';
 import type {
@@ -46,15 +47,15 @@ export const adaptFilmsToClient = (films: FilmFromServer[]): FilmProps[] => (
 );
 
 export const getGrade = (rating: number): string => {
-  if (rating === 10) {
+  if (rating === RatingGrade.Awesome) {
     return Grade.Awesome;
-  } else if (rating >= 8) {
+  } else if (rating >= RatingGrade.VeryGood) {
     return Grade.VeryGood;
-  } else if (rating >= 5) {
+  } else if (rating >= RatingGrade.Good) {
     return Grade.Good;
-  } else if (rating >= 3) {
+  } else if (rating >= RatingGrade.Normal) {
     return Grade.Normal;
-  } else if (rating > 0) {
+  } else if (rating > RatingGrade.Bad) {
     return Grade.Bad;
   }
   return '';

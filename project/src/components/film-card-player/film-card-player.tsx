@@ -21,13 +21,17 @@ export default function FilmCardPlayer({src, poster, isPlayed} : FilmCardPlayerP
     };
   }, [isPlayed]);
 
+  useEffect(() => {
+    const { current: video } = videoRef;
+    video && (video.muted = true);
+  }, []);
+
   return (
     <video
       className="player__video"
       ref={videoRef}
       src={src}
       poster={poster}
-      muted
     />
   );
 }

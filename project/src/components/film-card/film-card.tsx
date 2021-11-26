@@ -8,7 +8,14 @@ import FilmCardPlayer from '../film-card-player/film-card-player';
 import { AppRoute } from '../../const';
 import type { FilmCardProps } from './type';
 
-function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX.Element {
+function FilmCard({film}: FilmCardProps): JSX.Element {
+  const {
+    id,
+    name,
+    previewImage,
+    previewVideoLink,
+  } = film;
+
   const [isPlayed, setIsPlayed] = useState(false);
   const history = useHistory();
 
@@ -19,14 +26,12 @@ function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX
       className="small-film-card catalog__films-card"
       onMouseEnter={() => setIsPlayed(true)}
       onMouseLeave={() => setIsPlayed(false)}
+      onClick={() => history.push(filmRoute)}
     >
-      <div
-        className="small-film-card__image"
-        onClick={() => history.push(filmRoute)}
-      >
+      <div className="small-film-card__image">
         <FilmCardPlayer
           src={previewVideoLink}
-          poster={preview}
+          poster={previewImage}
           isPlayed={isPlayed}
         />
       </div>
@@ -35,7 +40,7 @@ function FilmCard({id, filmName, preview, previewVideoLink}: FilmCardProps): JSX
           className="small-film-card__link"
           to={filmRoute}
         >
-          {filmName}
+          {name}
         </Link>
       </h3>
     </article>
